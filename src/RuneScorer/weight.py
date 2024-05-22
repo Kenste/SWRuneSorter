@@ -16,60 +16,60 @@ def _find_relic(avail_stats, slot):
     subs = []
 
     # find max main stat
-    max_main_i, max_main_val = util.max_index_val(avail_stats.main_scores)
+    max_main_i, max_main_score = util.max_index_val(avail_stats.main_scores)
     main_stat = avail_stats.avail_mains[max_main_i]
     if (main_stat not in avail_stats.avail_subs
-            or max_main_val > avail_stats.innate_scores[avail_stats.sub_index(main_stat)]):
+            or max_main_score > avail_stats.innate_scores[avail_stats.sub_index(main_stat)]):
         # use this stat as a main stat
         logging.info(f"Using {main_stat} as main stat")
-        main = rune.RuneStat(main_stat, max_main_val)
+        main = rune.RuneStat(main_stat, constants.primary_upgrade_changes.get(main_stat)[2])
         avail_stats.remove_stat_option(max_main_i, substat=False)
 
         # find substat vs innate
-        max_sub_i, max_sub_val = util.max_index_val(avail_stats.sub_scores)
+        max_sub_i, max_sub_score = util.max_index_val(avail_stats.sub_scores)
         sub_stat = avail_stats.avail_subs[max_sub_i]
-        max_innate_val = avail_stats.innate_scores[max_sub_i]
-        if max_sub_val * max_upgrade_rolls > max_innate_val:
+        max_innate_score = avail_stats.innate_scores[max_sub_i]
+        if max_sub_score * max_upgrade_rolls > max_innate_score:
             # use this stat as a substat
             logging.info(f"Using {sub_stat} as initial maxed out substat")
-            subs.append(rune.RuneStat(sub_stat, max_sub_val * max_upgrade_rolls))
+            subs.append(rune.RuneStat(sub_stat, constants.sub_upgrade_range.get(sub_stat)[1] * max_upgrade_rolls))
             avail_stats.remove_stat_option(max_sub_i)
 
             # use max innate as innate
-            max_innate_i, max_innate_val = util.max_index_val(avail_stats.innate_scores)
+            max_innate_i, max_innate_score = util.max_index_val(avail_stats.innate_scores)
             innate_stat = avail_stats.avail_subs[max_innate_i]
             logging.info(f"Using {innate_stat} as innate stat")
-            innate = rune.RuneStat(innate_stat, max_innate_val)
+            innate = rune.RuneStat(innate_stat, constants.sub_upgrade_range.get(innate_stat)[1])
             avail_stats.remove_stat_option(max_innate_i)
         else:
             # use found substat as innate
             logging.info(f"Using {sub_stat} as innate stat")
-            innate = rune.RuneStat(sub_stat, avail_stats.innate_scores[max_sub_i])
+            innate = rune.RuneStat(sub_stat, constants.sub_upgrade_range.get(sub_stat)[1])
             avail_stats.remove_stat_option(max_sub_i)
     else:
         # use found main stat as innate
         max_innate_i = avail_stats.sub_index(main_stat)
-        max_innate_val = avail_stats.innate_scores[max_innate_i]
         logging.info(f"Using {main_stat} as innate stat")
-        innate = rune.RuneStat(main_stat, max_innate_val)
+        innate = rune.RuneStat(main_stat, constants.sub_upgrade_range.get(main_stat)[1])
         avail_stats.remove_stat_option(max_innate_i)
 
         # find a new main stat
-        max_main_i, max_main_val = util.max_index_val(avail_stats.main_scores)
+        max_main_i, _ = util.max_index_val(avail_stats.main_scores)
         main_stat = avail_stats.avail_mains[max_main_i]
         logging.info(f"Using {main_stat} as main stat")
-        main = rune.RuneStat(main_stat, max_main_val)
+        main = rune.RuneStat(main_stat, constants.primary_upgrade_changes.get(main_stat)[2])
         avail_stats.remove_stat_option(max_main_i, substat=False)
 
     # fill remaining substats
     for j in range(len(subs), 4):
-        max_sub_i, max_sub_val = util.max_index_val(avail_stats.sub_scores)
+        max_sub_i, _ = util.max_index_val(avail_stats.sub_scores)
+        stat = avail_stats.avail_subs[max_sub_i]
         if len(subs) == 0:
-            logging.info(f"Using {avail_stats.avail_subs[max_sub_i]} as maxed out substat")
-            subs.append(rune.RuneStat(avail_stats.avail_subs[max_sub_i], max_sub_val * max_upgrade_rolls))
+            logging.info(f"Using {stat} as maxed out substat")
+            subs.append(rune.RuneStat(stat, constants.sub_upgrade_range.get(stat)[1] * max_upgrade_rolls))
         else:
-            logging.info(f"Adding {avail_stats.avail_subs[max_sub_i]} as substat")
-            subs.append(rune.RuneStat(avail_stats.avail_subs[max_sub_i], max_sub_val))
+            logging.info(f"Adding {stat} as substat")
+            subs.append(rune.RuneStat(stat, constants.sub_upgrade_range.get(stat)[1]))
         avail_stats.remove_stat_option(max_sub_i)
     return rune.Rune(main, innate, subs, 15, slot, constants.Quality.Legend)
 
