@@ -14,6 +14,7 @@ class RuneStat:
         Returns the score for this rune stat.
         :param profile: the weight profile to use for the score calculation
         :param innate: whether this stat is an innate stat or not
+        :param main: whether this stat is a main stat or not
         :return: the score of this rune stat
         """
         if innate:
@@ -23,15 +24,15 @@ class RuneStat:
 
         avg_roll_count = self.get_roll_count()
         if not main and avg_roll_count >= 4:
-            roll_count_scale = profile.quad_roll_scale
+            roll_count_bonus = profile.quad_roll_bonus
         elif not main and avg_roll_count >= 3:
-            roll_count_scale = profile.triple_roll_scale
+            roll_count_bonus = profile.triple_roll_bonus
         else:
-            roll_count_scale = 1
+            roll_count_bonus = 0
 
         weight = profile.stat_weights.get(self.stat)
-        res = self.value * weight * roll_count_scale
-        logging.info(f"{self.stat} is scored with weight {profile.innate_weights.get(self.stat)}, roll scale {roll_count_scale} and result {res}")
+        res = self.value * (weight + roll_count_bonus)
+        logging.info(f"{self.stat} is scored with weight {profile.innate_weights.get(self.stat)}, roll bonus {roll_count_bonus} and result {res}")
         return res
 
     def get_roll_count(self) -> int:
@@ -58,4 +59,4 @@ class Rune:
         main_score = self.main.score(profile, main=True)
         innate_score = self.innate.score(profile, innate=True)
         sub_scores = [sub.score(profile) for sub in self.subs]
-        return main_score + innate_score + sum(sub_scores)
+        return (main_score + innate_score + sum(sub_scores)) * profile.get_normalization_factor(self.slot)
