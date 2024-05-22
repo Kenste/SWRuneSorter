@@ -15,6 +15,11 @@ class Stat(Enum):
     ACC = "ACC"
 
 
+class Quality(Enum):
+    Legend = "Legend"
+    Hero = "Hero"
+
+
 # (lower, upper)
 sub_upgrade_range = {
     Stat.ATK: (10, 20),
