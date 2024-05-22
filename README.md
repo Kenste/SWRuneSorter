@@ -19,9 +19,9 @@ Exactly how (and how well) this works is still a work in progress that I will ha
 ### Rune Scoring
 The score of a natural rune should be between 0 and 100 to have a fixed reference point. 
 Natural in this case means without amplified stats. 
-A rune with a score of 100 (or close to it) should be the perfect natural rune according to the set weights. 
+A rune with a score of 100 (or close to it) should be the "perfect" natural rune according to the set weights. 
 A rune above 100 is even better, but requires amplified stats. 
-This means that the given weights have to be normalized against a perfect rune (which is a perfectly upgraded +15 rune), which should be determined automatically, based on the weights themselves (this will get more complicated later, because of the different slots). 
+This means that the given weights have to be normalized against a "perfect" rune (which is a "perfectly" upgraded +15 rune), which should be determined automatically, based on the weights themselves (this will get more complicated later, because of the different slots). 
 Runes consist of a main stat, an optional innate stat, and up to four substats. 
 Since the innate stat is special and cannot be upgraded, it has separate weights. 
 This is because there are some stats that we would rather have as sub or main stats than innate, and vice versa. 
@@ -34,7 +34,14 @@ Given a rune and the stat and innate stat weights, we multiply each substat by i
 Finally, we sum the products to get the final score of the rune based on the given weight profile. 
 
 This is where the simplicity ends. 
-Since some substats are blocked from certain rune slots, and each slot has different primary stats, there is no perfect rune for all slots. 
-Therefore, one perfect rune per slot must be determined, and the normalization must be done per slot. 
+Since some substats are blocked from certain rune slots, and each slot has different primary stats, there is no "perfect" rune for all slots. 
+Therefore, one "perfect" rune per slot must be determined, and the normalization must be done per slot. 
 This ensures that a rune with a score of 100 is possible in every slot.
 There are probably more problems that I do not know about yet, but I will add them to this document.
+
+## Limitations
+There are, of course, limitations to this project and its use. 
+The runes that are considered by this project are limited to 6-star runes of hero or legend quality. 
+5-star or lower runes will be compared to 6-star runes. 
+Endgame players may not need this tool, as they have sufficient knowledge of runes. 
+This project is made by a beginner who wants to automate the boring and repetitive task of upgrading and selling useless runes.
