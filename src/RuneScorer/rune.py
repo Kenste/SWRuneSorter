@@ -67,16 +67,16 @@ class RuneStat:
 
         avg_roll_count = self.get_roll_count()
         if not main and avg_roll_count >= 4:
-            roll_count_bonus = profile.quad_roll_bonus
+            roll_count_scale = profile.quad_roll_scale
         elif not main and avg_roll_count >= 3:
-            roll_count_bonus = profile.triple_roll_bonus
+            roll_count_scale = profile.triple_roll_scale
         else:
-            roll_count_bonus = 0
+            roll_count_scale = 1
 
         weight = profile.stat_weights.get(self.stat)
-        res = self.value * (weight + roll_count_bonus)
+        res = self.value * weight * roll_count_scale
         logging.info(
-            f"{self.stat} is scored with weight {profile.innate_weights.get(self.stat)}, roll bonus {roll_count_bonus} and result {res}")
+            f"{self.stat} is scored with weight {profile.innate_weights.get(self.stat)}, roll scale {roll_count_scale} and result {res}")
         return res
 
     def __copy__(self):

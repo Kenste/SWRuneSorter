@@ -4,8 +4,6 @@ import constants
 import rune
 import util
 
-profiles = []
-
 
 def _find_relic(avail_stats, slot):
     # 4 rolls into stat
@@ -75,29 +73,28 @@ def _find_relic(avail_stats, slot):
 
 
 class WeightProfile:
-    def __init__(self, name, stat_weights, innate_weights, triple_roll_bonus, quad_roll_bonus):
+    def __init__(self, name, stat_weights, innate_weights, triple_roll_scale, quad_roll_scale):
         """
         :param name: the name to identify this weight profile
         :param stat_weights: a dictionary to map the stat to a weight
         :param innate_weights: a dictionary to map the (innate) stat to a weight
-        :param triple_roll_bonus: the bonus to add to the triple rolled stat
-        :param quad_roll_bonus: the bonus to add to the quad rolled stat
+        :param triple_roll_scale: the scale to multipy the triple rolled stat with
+        :param quad_roll_scale: the scale to multipy the quad rolled stat with
         """
         self.name = name
         self.stat_weights = stat_weights
         self.innate_weights = innate_weights
-        self.triple_roll_bonus = max(triple_roll_bonus, 0)
-        self.quad_roll_bonus = max(quad_roll_bonus, 0)
+        self.triple_roll_scale = max(triple_roll_scale, 1)
+        self.quad_roll_scale = max(quad_roll_scale, 1)
         self.factors = []
-        profiles.append(self)
-        self.normalize(stat_weights, innate_weights)
+        self.normalize()
 
     def get_normalization_factor(self, slot):
         if len(self.factors) < 6:
             return 1
         return self.factors[slot - 1]
 
-    def normalize(self, stat_weights, innate_weights):
+    def normalize(self):
         logging.info(f"Normalizing WeightProfile {self.name}")
         for slot in range(1, 7):
             avail_stats = util.AvailableStatsAndScore(slot, self)
