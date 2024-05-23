@@ -10,10 +10,10 @@ def _add_new_stat(rune, profile, eval_func):
     stat_scores = [(stat, eval_func(constants.sub_upgrade_range.get(stat)) * profile.stat_weights.get(stat)) for stat in
                    avail_stats]
     stat = eval_func(stat_scores, key=lambda x: x[1])[0]
-    rune.subs.append(RuneStat(stat, constants.sub_upgrade_range.get(stat)[1]))
+    rune.subs.append(RuneStat(stat, eval_func(constants.sub_upgrade_range.get(stat))))
 
 
-def _upgrade_max_stat(rune, profile):
+def _upgrade_max_potential_stat(rune, profile):
     subs = []
     for sub in rune.subs:
         max_sub = copy(sub)
@@ -23,6 +23,20 @@ def _upgrade_max_stat(rune, profile):
     max_sub = max(subs, key=lambda x: x[1])
     i = subs.index(max_sub)
     rune.subs[i].value = max_sub[0].value
+
+
+def _upgrade_min_potential_stats(rune, profile):
+    res = copy(rune)
+    for _ in range(rune.remaining_upgrades()):
+        # upgrade each stat separate
+        variants_score = []
+        for i in range(len(rune.subs)):
+            curr = copy(res)
+            curr.subs[i].value += constants.sub_upgrade_range.get(curr.subs[i].stat)[0]
+            variants_score.append((curr, curr.score(profile)))
+        # find min scoring rune
+        res = min(variants_score, key=lambda x: x[1])[0]
+    rune.subs = res.subs
 
 
 def _max_main_stat(rune):
@@ -105,11 +119,19 @@ class Rune:
 
     def max_score(self, profile):
         max_rune = copy(self)
-        _upgrade_max_stat(max_rune, profile)
+        _upgrade_max_potential_stat(max_rune, profile)
         if max_rune.quality == constants.Quality.Hero:
             _add_new_stat(max_rune, profile, max)
         _max_main_stat(max_rune)
         return max_rune.score(profile)
+
+    def min_score(self, profile):
+        min_rune = copy(self)
+        _upgrade_min_potential_stats(min_rune, profile)
+        if min_rune.quality == constants.Quality.Hero:
+            _add_new_stat(min_rune, profile, min)
+        _max_main_stat(min_rune)
+        return min_rune.score(profile)
 
     def __copy__(self):
         return Rune(copy(self.main), copy(self.innate), [copy(sub) for sub in self.subs], self.level, self.slot,
