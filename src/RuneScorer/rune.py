@@ -4,16 +4,16 @@ import logging
 from copy import copy
 
 
-def add_new_stat(rune, profile, eval_func):
+def _add_new_stat(rune, profile, eval_func):
     stats = [sub.stat for sub in rune.subs]
     avail_stats = [stat for stat in constants.slot_to_available_substat.get(rune.slot) if stat not in stats]
-    stat_scores = [(stat, constants.sub_upgrade_range.get(stat)[1] * profile.stat_weights.get(stat)) for stat in
+    stat_scores = [(stat, eval_func(constants.sub_upgrade_range.get(stat)) * profile.stat_weights.get(stat)) for stat in
                    avail_stats]
     stat = eval_func(stat_scores, key=lambda x: x[1])[0]
     rune.subs.append(RuneStat(stat, constants.sub_upgrade_range.get(stat)[1]))
 
 
-def upgrade_max_stat(rune, profile):
+def _upgrade_max_stat(rune, profile):
     subs = []
     for sub in rune.subs:
         max_sub = copy(sub)
@@ -23,6 +23,13 @@ def upgrade_max_stat(rune, profile):
     max_sub = max(subs, key=lambda x: x[1])
     i = subs.index(max_sub)
     rune.subs[i].value = max_sub[0].value
+
+
+def _max_main_stat(rune):
+    main = rune.main
+    max_main_val = constants.primary_upgrade_changes.get(main.stat)[2]
+    main.value = max_main_val
+    rune.level = 15
 
 
 class RuneStat:
@@ -89,3 +96,24 @@ class Rune:
         innate_score = self.innate.score(profile, innate=True) if self.innate is not None else 0
         sub_scores = [sub.score(profile) for sub in self.subs]
         return (main_score + innate_score + sum(sub_scores)) * profile.get_normalization_factor(self.slot)
+
+    def remaining_upgrades(self):
+        remaining = max(math.ceil((12 - self.level) / 3), 0)
+        if self.quality == constants.Quality.Hero:
+            remaining = max(remaining - 1, 0)
+        return remaining
+
+    def max_score(self, profile):
+        max_rune = copy(self)
+        _upgrade_max_stat(max_rune, profile)
+        if max_rune.quality == constants.Quality.Hero:
+            _add_new_stat(max_rune, profile, max)
+        _max_main_stat(max_rune)
+        return max_rune.score(profile)
+
+    def __copy__(self):
+        return Rune(copy(self.main), copy(self.innate), [copy(sub) for sub in self.subs], self.level, self.slot,
+                    self.quality)
+
+    def __str__(self):
+        return f"{self.main}, {self.innate}, {[str(sub) for sub in self.subs]}, {self.level}, {self.slot}, {self.quality}"
