@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class Stat(Enum):
+class Stat(StrEnum):
     ATK = "ATK"
     ATK_P = "ATK%"
     DEF = "DEF"
@@ -15,7 +15,7 @@ class Stat(Enum):
     ACC = "ACC"
 
 
-class Quality(Enum):
+class Quality(StrEnum):
     Legend = "Legend"
     Hero = "Hero"
 
