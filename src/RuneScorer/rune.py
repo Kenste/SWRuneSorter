@@ -1,10 +1,7 @@
 import constants
 import math
 import logging
-# from weight import WeightProfile
 from copy import copy
-
-from RuneScorer import weight
 
 
 def add_new_stat(rune, profile, eval_func):
