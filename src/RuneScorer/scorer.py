@@ -23,6 +23,10 @@ _stat_ID = [
 
 
 def parse_profiles(file_path: str) -> None:
+    """
+    Parses each weight profile defined in the given json file.
+    :param file_path: the path to the json file containing the weight profile definitions.
+    """
     with open(file_path) as json_data:
         data = json.load(json_data)
         for profile in data:
@@ -34,7 +38,12 @@ def parse_profiles(file_path: str) -> None:
             _profiles.append(prof)
 
 
-def parse_runes(file_path: str) -> [Rune]:
+def parse_runes_from_json(file_path: str) -> [Rune]:
+    """
+    Parses every rune given in the account json file.
+    :param file_path: the path to the json file
+    :return: every parsed rune given in the account json file
+    """
     with open(file_path) as json_data:
         data = json.load(json_data)
         runes_data = data["runes"]
@@ -57,16 +66,35 @@ def parse_runes(file_path: str) -> [Rune]:
     return runes
 
 
-def curr_score(rune: Rune):
+def curr_score(rune: Rune) -> tuple[float, str]:
+    """
+    Calculates the current score of the given rune using each parsed profile.
+    Returns the maximum score for the given rune as well as the name of the profile the rune scored highest with.
+    :param rune: the rune to score
+    :return: the max current score for the given rune as well as the name of the profile
+    """
     scores = [(rune.score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
 
 
-def max_score(rune: Rune):
+def max_score(rune: Rune) -> tuple[float, str]:
+    """
+    Calculates the maximum score of the given rune using each parsed profile.
+    Returns the maximum score for the given rune as well as the name of the profile the rune scored highest with.
+    :param rune: the rune to score
+    :return: the max maximum score for the given rune as well as the name of the profile
+    """
     scores = [(rune.max_score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
 
 
-def min_score(rune: Rune):
+def min_score(rune: Rune) -> tuple[float, str]:
+    """
+    Calculates the minimum score of the given rune using each parsed profile.
+    Returns the maximum score for the given rune as well as the name of the profile the rune scored highest with.
+    The maximum score is used because it shows the "best" worst-case the rune can achieve.
+    :param rune: the rune to score
+    :return: the max minimum score for the given rune as well as the name of the profile
+    """
     scores = [(rune.min_score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
