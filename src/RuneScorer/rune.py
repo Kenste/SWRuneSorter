@@ -151,8 +151,8 @@ class Rune:
         :param profile: the weight profile to use in the calculation
         :return: the current normalized score of this rune
         """
-        # TODO: subtract a baseline score from _score to enable 0 score
-        return self._score(profile) * profile.get_normalization_factor(self.slot)
+        return ((self._score(profile) - profile.get_baseline_value(self.slot))
+                * profile.get_normalization_factor(self.slot))
 
     def remaining_upgrades(self) -> int:
         """
@@ -167,7 +167,7 @@ class Rune:
 
     def max_normalized_score(self, profile) -> float:
         """
-        Upgrades the rune to +15 and upgrades the stats that achieve the maximum possible score for this rune.
+        Upgrades the rune to +12 and upgrades the stats that achieve the maximum possible score for this rune.
         :param profile: the weight profile to use in the calculation
         :return: the calculated maximum theoretical score this rune can achieve
         """
@@ -180,7 +180,7 @@ class Rune:
 
     def min_normalized_score(self, profile) -> float:
         """
-        Upgrades the rune to +15 and upgrades the stats that achieve the minimum possible score for this rune.
+        Upgrades the rune to +12 and upgrades the stats that achieve the minimum possible score for this rune.
         :param profile: the weight profile to use in the calculation
         :return: the calculated minimum theoretical score this rune can achieve
         """
@@ -190,6 +190,19 @@ class Rune:
             _add_new_stat(min_rune, profile, min)
         _max_main_stat(min_rune)
         return min_rune.normalized_score(profile)
+
+    def _min_score(self, profile) -> float:
+        """
+        Upgrades the rune to +12 and upgrades the stats that achieve the minimum possible score for this rune.
+        :param profile: the weight profile to use in the calculation
+        :return: the calculated minimum theoretical score this rune can achieve
+        """
+        min_rune = copy(self)
+        _upgrade_min_potential_stats(min_rune, profile)
+        if min_rune.quality == constants.Quality.Hero:
+            _add_new_stat(min_rune, profile, min)
+        _max_main_stat(min_rune)
+        return min_rune._score(profile)
 
     def __copy__(self):
         return Rune(copy(self.main), copy(self.innate), [copy(sub) for sub in self.subs], self.level, self.slot,

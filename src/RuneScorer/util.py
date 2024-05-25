@@ -10,18 +10,27 @@ def max_index_val(l: [int]) -> tuple[int, int]:
     return max(enumerate(l), key=lambda x: x[1])
 
 
+def min_index_val(l: [int]) -> tuple[int, int]:
+    """
+    Returns the minimum value and its index in the given list.
+    :param l: the list
+    :return: the minimum value and its index in the given list as (index, value)
+    """
+    return min(enumerate(l), key=lambda x: x[1])
+
+
 class AvailableStatsAndScore:
-    def __init__(self, slot: int, profile):
+    def __init__(self, slot: int, profile, main_score_index=2, sub_score_index=1):
         # get available stats for this slot
         self.avail_mains = constants.slot_to_available_mainstat.get(slot).copy()
         self.avail_subs = constants.slot_to_available_substat.get(slot).copy()
         # get the max score of each stat
-        self.main_scores = [profile.stat_weights.get(main) * constants.primary_upgrade_changes.get(main)[2] for main in
-                            self.avail_mains]
-        self.sub_scores = [profile.stat_weights.get(sub) * constants.sub_upgrade_range.get(sub)[1] for sub in
-                           self.avail_subs]
-        self.innate_scores = [profile.innate_weights.get(sub) * constants.sub_upgrade_range.get(sub)[1] for sub in
-                              self.avail_subs]
+        self.main_scores = [profile.stat_weights.get(main) *
+                            constants.primary_upgrade_changes.get(main)[main_score_index] for main in self.avail_mains]
+        self.sub_scores = [profile.stat_weights.get(sub) *
+                           constants.sub_upgrade_range.get(sub)[sub_score_index] for sub in self.avail_subs]
+        self.innate_scores = [profile.innate_weights.get(sub) *
+                              constants.sub_upgrade_range.get(sub)[sub_score_index] for sub in self.avail_subs]
 
     def remove_stat_option(self, index, substat=True) -> None:
         """

@@ -7,9 +7,9 @@ import util
 
 def _find_relic(avail_stats, slot: int) -> rune.Rune:
     """
-    Finds a "perfect" rune, i.e. one that maximises the score for the profile.
+    Finds a "perfect" legend rune, i.e. one that maximises the score for the profile.
     :param avail_stats: the helper class holding the scores of the stats
-    :param slot: the slot to find the perfect relic for
+    :param slot: the slot to find the perfect rune for
     :return: the rune that maximises the score for the provided profile
     """
     # 4 rolls into stat
@@ -78,6 +78,32 @@ def _find_relic(avail_stats, slot: int) -> rune.Rune:
     return rune.Rune(main, innate, subs, 12, slot, constants.Quality.Legend)
 
 
+def _find_min_rune(avail_stats, slot: int, profile) -> float:
+    """
+    Finds a "worst" legend rune, i.e. one that minimises the score for the profile.
+    :param avail_stats: the helper class holding the scores of the stats
+    :param slot: the slot to find the worst rune for
+    :return: the rune that minimises the score for the provided profile
+    """
+    # pick the lowest scoring main stat
+    min_main_i, min_main_score = util.min_index_val(avail_stats.main_scores)
+    main_stat = avail_stats.avail_mains[min_main_i]
+    logging.info(f"Using {main_stat} as worst substat")
+    main = rune.RuneStat(main_stat, constants.primary_upgrade_changes.get(main_stat)[0])
+    avail_stats.remove_stat_option(min_main_i, substat=False)
+
+    # fill substats with the lowest scoring stats
+    subs = []
+    for j in range(len(subs), 4):
+        min_sub_i, _ = util.min_index_val(avail_stats.sub_scores)
+        stat = avail_stats.avail_subs[min_sub_i]
+        logging.info(f"Adding {stat} as substat")
+        subs.append(rune.RuneStat(stat, constants.sub_upgrade_range.get(stat)[0]))
+        avail_stats.remove_stat_option(min_sub_i)
+    r = rune.Rune(main, None, subs, 0, slot, constants.Quality.Legend)
+    return r.min_normalized_score(profile)
+
+
 class WeightProfile:
     def __init__(self, name, stat_weights, innate_weights, triple_roll_scale, quad_roll_scale):
         """
@@ -92,7 +118,8 @@ class WeightProfile:
         self.innate_weights = innate_weights
         self.triple_roll_scale = max(triple_roll_scale, 1)
         self.quad_roll_scale = max(quad_roll_scale, 1)
-        self.factors = []
+        self._factors = []
+        self._base_scores = []
         self._normalize()
 
     def get_normalization_factor(self, slot: int) -> float:
@@ -102,9 +129,14 @@ class WeightProfile:
         :param slot: the slot of rune to get the normalization factor for
         :return: the normalization factor of the given slot of rune
         """
-        if len(self.factors) < 6:
+        if len(self._factors) < 6:
             return 1
-        return self.factors[slot - 1]
+        return self._factors[slot - 1]
+
+    def get_baseline_value(self, slot: int) -> float:
+        if len(self._factors) < 6:
+            return 0
+        return self._base_scores[slot - 1]
 
     def _normalize(self) -> None:
         """
@@ -113,9 +145,12 @@ class WeightProfile:
         """
         logging.info(f"Normalizing WeightProfile {self.name}")
         for slot in range(1, 7):
+            avail_stats = util.AvailableStatsAndScore(slot, self, main_score_index=0, sub_score_index=0)
+            min_score = _find_min_rune(avail_stats, slot, self)
+            self._base_scores.append(min_score)
             avail_stats = util.AvailableStatsAndScore(slot, self)
-            r = _find_relic(avail_stats, slot)
-            max_score = r._score(self)
-            normalization_factor = 100 / max_score
-            self.factors.append(normalization_factor)
+            max_rune = _find_relic(avail_stats, slot)
+            max_score = max_rune._score(self)
+            normalization_factor = 100 / (max_score - min_score)
+            self._factors.append(normalization_factor)
             logging.info(f"Normalized slot {slot} with score {max_score} and factor {normalization_factor}")
