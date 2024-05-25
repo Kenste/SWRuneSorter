@@ -1,7 +1,12 @@
 import constants
 
 
-def max_index_val(l):
+def max_index_val(l: [int]) -> tuple[int, int]:
+    """
+    Returns the maximum value and its index in the given list.
+    :param l: the list
+    :return: the maximum value and its index in the given list as (index, value)
+    """
     return max(enumerate(l), key=lambda x: x[1])
 
 
@@ -18,7 +23,12 @@ class AvailableStatsAndScore:
         self.innate_scores = [profile.innate_weights.get(sub) * constants.sub_upgrade_range.get(sub)[1] for sub in
                               self.avail_subs]
 
-    def remove_stat_option(self, index, substat=True):
+    def remove_stat_option(self, index, substat=True) -> None:
+        """
+        Removes the stat at the given index as an option from the lists.
+        :param index: the index to remove the stat from
+        :param substat: whether the stat is a substat or not
+        """
         if substat:
             stat = self.avail_subs[index]
             if stat in self.avail_mains:
@@ -38,8 +48,18 @@ class AvailableStatsAndScore:
             del self.avail_mains[index]
             del self.main_scores[index]
 
-    def main_index(self, stat):
+    def main_index(self, stat) -> int:
+        """
+        Returns the index of the given stat in the main stat list.
+        :param stat: the stat to get the index for
+        :return: the index of the given stat in the main stat list
+        """
         return self.avail_mains.index(stat)
 
-    def sub_index(self, stat):
+    def sub_index(self, stat) -> int:
+        """
+        Returns the index of the given stat in the substat list.
+        :param stat: the stat to get the index for
+        :return: the index of the given stat in the substat list
+        """
         return self.avail_subs.index(stat)
