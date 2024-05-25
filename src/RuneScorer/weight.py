@@ -5,7 +5,13 @@ import rune
 import util
 
 
-def _find_relic(avail_stats, slot):
+def _find_relic(avail_stats, slot: int) -> rune.Rune:
+    """
+    Finds a "perfect" rune, i.e. one that maximises the score for the profile.
+    :param avail_stats: the helper class holding the scores of the stats
+    :param slot: the slot to find the perfect relic for
+    :return: the rune that maximises the score for the provided profile
+    """
     # 4 rolls into stat
     max_upgrade_rolls = 1 + 4
 
@@ -87,14 +93,24 @@ class WeightProfile:
         self.triple_roll_scale = max(triple_roll_scale, 1)
         self.quad_roll_scale = max(quad_roll_scale, 1)
         self.factors = []
-        self.normalize()
+        self._normalize()
 
-    def get_normalization_factor(self, slot):
+    def get_normalization_factor(self, slot: int) -> float:
+        """
+        Returns the calculated normalization factor for the given slot of runes.
+        The factor can (and is used) by the rune to normalize its score between 0 and 100.
+        :param slot: the slot of rune to get the normalization factor for
+        :return: the normalization factor of the given slot of rune
+        """
         if len(self.factors) < 6:
             return 1
         return self.factors[slot - 1]
 
-    def normalize(self):
+    def _normalize(self) -> None:
+        """
+        Normalizes this profile by determining a "perfect" rune, i.e. one with the highest possible score for this
+        profile and uses this score as a reference point for the normalization factor.
+        """
         logging.info(f"Normalizing WeightProfile {self.name}")
         for slot in range(1, 7):
             avail_stats = util.AvailableStatsAndScore(slot, self)
