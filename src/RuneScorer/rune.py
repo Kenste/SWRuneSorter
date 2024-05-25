@@ -56,7 +56,7 @@ def _upgrade_min_potential_stats(rune, profile) -> None:
         for i in range(len(rune.subs)):
             curr = copy(res)
             curr.subs[i].value += constants.sub_upgrade_range.get(curr.subs[i].stat)[0]
-            variants_score.append((curr, curr.score(profile)))
+            variants_score.append((curr, curr.normalized_score(profile)))
         # find min scoring rune
         res = min(variants_score, key=lambda x: x[1])[0]
     rune.subs = res.subs
@@ -132,10 +132,9 @@ class Rune:
         self.slot = slot
         self.quality = quality
 
-    def score(self, profile) -> float:
+    def _score(self, profile) -> float:
         """
-        Calculates the current score of this rune, which should be between 0 and 100, with 100 being a "perfect"
-        non-grinded rune for the same slot as the rune.
+        Calculates the current score of this rune.
         The score is calculated by multiplying each stat by its assigned weight and summing the products.
         :param profile: the weight profile to use in the calculation
         :return: the calculated score of this rune
@@ -143,7 +142,17 @@ class Rune:
         main_score = self.main.score(profile, main=True)
         innate_score = self.innate.score(profile, innate=True) if self.innate is not None else 0
         sub_scores = [sub.score(profile) for sub in self.subs]
-        return (main_score + innate_score + sum(sub_scores)) * profile.get_normalization_factor(self.slot)
+        return main_score + innate_score + sum(sub_scores)
+
+    def normalized_score(self, profile):
+        """
+        Returns the current score normalized between 0 and 100, with 100 being a "perfect" +12 non-grinded rune for
+        the same slot as the rune.
+        :param profile: the weight profile to use in the calculation
+        :return: the current normalized score of this rune
+        """
+        # TODO: subtract a baseline score from _score to enable 0 score
+        return self._score(profile) * profile.get_normalization_factor(self.slot)
 
     def remaining_upgrades(self) -> int:
         """
@@ -156,7 +165,7 @@ class Rune:
             remaining = max(remaining - 1, 0)
         return remaining
 
-    def max_score(self, profile) -> float:
+    def max_normalized_score(self, profile) -> float:
         """
         Upgrades the rune to +15 and upgrades the stats that achieve the maximum possible score for this rune.
         :param profile: the weight profile to use in the calculation
@@ -167,9 +176,9 @@ class Rune:
         if max_rune.quality == constants.Quality.Hero:
             _add_new_stat(max_rune, profile, max)
         _max_main_stat(max_rune)
-        return max_rune.score(profile)
+        return max_rune.normalized_score(profile)
 
-    def min_score(self, profile) -> float:
+    def min_normalized_score(self, profile) -> float:
         """
         Upgrades the rune to +15 and upgrades the stats that achieve the minimum possible score for this rune.
         :param profile: the weight profile to use in the calculation
@@ -180,7 +189,7 @@ class Rune:
         if min_rune.quality == constants.Quality.Hero:
             _add_new_stat(min_rune, profile, min)
         _max_main_stat(min_rune)
-        return min_rune.score(profile)
+        return min_rune.normalized_score(profile)
 
     def __copy__(self):
         return Rune(copy(self.main), copy(self.innate), [copy(sub) for sub in self.subs], self.level, self.slot,

@@ -115,7 +115,7 @@ class WeightProfile:
         for slot in range(1, 7):
             avail_stats = util.AvailableStatsAndScore(slot, self)
             r = _find_relic(avail_stats, slot)
-            max_score = r.score(self)
+            max_score = r._score(self)
             normalization_factor = 100 / max_score
             self.factors.append(normalization_factor)
             logging.info(f"Normalized slot {slot} with score {max_score} and factor {normalization_factor}")

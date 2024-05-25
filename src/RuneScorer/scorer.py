@@ -73,7 +73,7 @@ def curr_score(rune: Rune) -> tuple[float, str]:
     :param rune: the rune to score
     :return: the max current score for the given rune as well as the name of the profile
     """
-    scores = [(rune.score(profile), profile.name) for profile in _profiles]
+    scores = [(rune.normalized_score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
 
 
@@ -84,7 +84,7 @@ def max_score(rune: Rune) -> tuple[float, str]:
     :param rune: the rune to score
     :return: the max maximum score for the given rune as well as the name of the profile
     """
-    scores = [(rune.max_score(profile), profile.name) for profile in _profiles]
+    scores = [(rune.max_normalized_score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
 
 
@@ -96,5 +96,5 @@ def min_score(rune: Rune) -> tuple[float, str]:
     :param rune: the rune to score
     :return: the max minimum score for the given rune as well as the name of the profile
     """
-    scores = [(rune.min_score(profile), profile.name) for profile in _profiles]
+    scores = [(rune.min_normalized_score(profile), profile.name) for profile in _profiles]
     return max(scores, key=lambda x: x[0])
