@@ -64,13 +64,13 @@ def _upgrade_min_potential_stats(rune, profile) -> None:
 
 def _max_main_stat(rune) -> None:
     """
-    Upgrades the rune to level 15 and increases the main stat to its maximum value
-    :param rune: the rune to upgrade to level 15 and increase its main stat
+    Upgrades the rune to level 12 and increases the main stat to its corresponding value.
+    :param rune: the rune to upgrade to level 12 and increase its main stat
     """
     main = rune.main
     max_main_val = constants.primary_upgrade_changes.get(main.stat)[2]
     main.value = max_main_val
-    rune.level = 15
+    rune.level = 12
 
 
 class RuneStat:

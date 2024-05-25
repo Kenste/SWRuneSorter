@@ -35,19 +35,19 @@ sub_upgrade_range = {
     Stat.ACC: (4, 8)
 }
 
-# (start value, upgrade per level, max value)
+# (start value, upgrade per level, +12 value)
 primary_upgrade_changes = {
-    Stat.ATK: (22, 8, 160),
-    Stat.ATK_P: (11, 3, 63),
-    Stat.DEF: (22, 8, 160),
-    Stat.DEF_P: (11, 3, 63),
-    Stat.HP: (360, 120, 2448),
-    Stat.HP_P: (11, 3, 63),
-    Stat.SPD: (7, 2, 42),
-    Stat.CRate: (7, 3, 58),
-    Stat.CDmg: (11, 4, 80),
-    Stat.RES: (12, 3, 64),
-    Stat.ACC: (12, 3, 64)
+    Stat.ATK: (22, 8, 118),
+    Stat.ATK_P: (11, 3, 47),
+    Stat.DEF: (22, 8, 118),
+    Stat.DEF_P: (11, 3, 47),
+    Stat.HP: (360, 120, 1800),
+    Stat.HP_P: (11, 3, 47),
+    Stat.SPD: (7, 2, 31),
+    Stat.CRate: (7, 3, 43),
+    Stat.CDmg: (11, 4, 59),
+    Stat.RES: (12, 3, 48),
+    Stat.ACC: (12, 3, 48)
 }
 
 slot_to_available_substat = {

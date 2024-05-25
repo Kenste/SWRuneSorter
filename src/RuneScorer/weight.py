@@ -75,7 +75,7 @@ def _find_relic(avail_stats, slot: int) -> rune.Rune:
             logging.info(f"Adding {stat} as substat")
             subs.append(rune.RuneStat(stat, constants.sub_upgrade_range.get(stat)[1]))
         avail_stats.remove_stat_option(max_sub_i)
-    return rune.Rune(main, innate, subs, 15, slot, constants.Quality.Legend)
+    return rune.Rune(main, innate, subs, 12, slot, constants.Quality.Legend)
 
 
 class WeightProfile:
