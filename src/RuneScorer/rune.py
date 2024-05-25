@@ -1,10 +1,23 @@
-import constants
-import math
 import logging
+import math
 from copy import copy
 
+import constants
 
-def _add_new_stat(rune, profile, eval_func):
+
+def _add_new_stat(rune, profile, eval_func) -> None:
+    """
+    Adds a new stat to the given rune, if the rune does not already have 4 or more substats.
+    The stat is picked based of the score calculated from the profile and the given evaluation function,
+    e.g. `max` or `min` to pick the highest or lowest scoring stat respectively.
+    :param rune: the rune to add a stat to
+    :param profile: the weight profile to use for the score calculation
+    :param eval_func: the function to pick the "fitting" stat
+    """
+    if len(rune.subs) >= 4:
+        logging.warning(f"Avoided adding more than 4 substats to rune {rune}")
+        return
+
     stats = [sub.stat for sub in rune.subs]
     avail_stats = [stat for stat in constants.slot_to_available_substat.get(rune.slot) if stat not in stats]
     stat_scores = [(stat, eval_func(constants.sub_upgrade_range.get(stat)) * profile.stat_weights.get(stat)) for stat in
@@ -13,7 +26,12 @@ def _add_new_stat(rune, profile, eval_func):
     rune.subs.append(RuneStat(stat, eval_func(constants.sub_upgrade_range.get(stat))))
 
 
-def _upgrade_max_potential_stat(rune, profile):
+def _upgrade_max_potential_stat(rune, profile) -> None:
+    """
+    Upgrades the substat that provides the most score for the rune.
+    :param rune: the rune to upgrade the substat for
+    :param profile: the weight profile to base the score calculation on
+    """
     subs = []
     for sub in rune.subs:
         max_sub = copy(sub)
@@ -25,7 +43,12 @@ def _upgrade_max_potential_stat(rune, profile):
     rune.subs[i].value = max_sub[0].value
 
 
-def _upgrade_min_potential_stats(rune, profile):
+def _upgrade_min_potential_stats(rune, profile) -> None:
+    """
+    Upgrades the combination of substats in the rune that end up with the lowest possible score for the rune.
+    :param rune: the rune to upgrade the substats for
+    :param profile: the weight profile to base the score calculation on
+    """
     res = copy(rune)
     for _ in range(rune.remaining_upgrades()):
         # upgrade each stat separate
@@ -39,7 +62,11 @@ def _upgrade_min_potential_stats(rune, profile):
     rune.subs = res.subs
 
 
-def _max_main_stat(rune):
+def _max_main_stat(rune) -> None:
+    """
+    Upgrades the rune to level 15 and increases the main stat to its maximum value
+    :param rune: the rune to upgrade to level 15 and increase its main stat
+    """
     main = rune.main
     max_main_val = constants.primary_upgrade_changes.get(main.stat)[2]
     main.value = max_main_val
@@ -105,19 +132,36 @@ class Rune:
         self.slot = slot
         self.quality = quality
 
-    def score(self, profile):
+    def score(self, profile) -> float:
+        """
+        Calculates the current score of this rune, which should be between 0 and 100, with 100 being a "perfect"
+        non-grinded rune for the same slot as the rune.
+        The score is calculated by multiplying each stat by its assigned weight and summing the products.
+        :param profile: the weight profile to use in the calculation
+        :return: the calculated score of this rune
+        """
         main_score = self.main.score(profile, main=True)
         innate_score = self.innate.score(profile, innate=True) if self.innate is not None else 0
         sub_scores = [sub.score(profile) for sub in self.subs]
         return (main_score + innate_score + sum(sub_scores)) * profile.get_normalization_factor(self.slot)
 
-    def remaining_upgrades(self):
+    def remaining_upgrades(self) -> int:
+        """
+        Returns the number of remaining upgrades this rune has left.
+        This is based on the level of the rune.
+        :return: the number of remaining upgrades this rune has left.
+        """
         remaining = max(math.ceil((12 - self.level) / 3), 0)
         if self.quality == constants.Quality.Hero:
             remaining = max(remaining - 1, 0)
         return remaining
 
-    def max_score(self, profile):
+    def max_score(self, profile) -> float:
+        """
+        Upgrades the rune to +15 and upgrades the stats that achieve the maximum possible score for this rune.
+        :param profile: the weight profile to use in the calculation
+        :return: the calculated maximum theoretical score this rune can achieve
+        """
         max_rune = copy(self)
         _upgrade_max_potential_stat(max_rune, profile)
         if max_rune.quality == constants.Quality.Hero:
@@ -125,7 +169,12 @@ class Rune:
         _max_main_stat(max_rune)
         return max_rune.score(profile)
 
-    def min_score(self, profile):
+    def min_score(self, profile) -> float:
+        """
+        Upgrades the rune to +15 and upgrades the stats that achieve the minimum possible score for this rune.
+        :param profile: the weight profile to use in the calculation
+        :return: the calculated minimum theoretical score this rune can achieve
+        """
         min_rune = copy(self)
         _upgrade_min_potential_stats(min_rune, profile)
         if min_rune.quality == constants.Quality.Hero:
