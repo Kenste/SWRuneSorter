@@ -169,8 +169,10 @@ class Editor:
         val = var.float_value()
         if var in self.component_map_stat:
             _, label, stat = self.component_map_stat[var]
+            self.current_profile.set_stat_weight(stat, val)
         else:
             _, label, stat = self.component_map_innate[var]
+            self.current_profile.set_innate_weight(stat, val)
         max_roll = sub_upgrade_range.get(stat)[1]
         label.config(text=f"= {max_roll * val}")
 
