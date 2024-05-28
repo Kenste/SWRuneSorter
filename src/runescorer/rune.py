@@ -2,7 +2,7 @@ import logging
 import math
 from copy import copy
 
-import constants
+from runescorer import constants
 
 
 def _add_new_stat(rune, profile, eval_func) -> None:
@@ -20,7 +20,7 @@ def _add_new_stat(rune, profile, eval_func) -> None:
 
     stats = [sub.stat for sub in rune.subs]
     avail_stats = [stat for stat in constants.slot_to_available_substat.get(rune.slot) if stat not in stats]
-    stat_scores = [(stat, eval_func(constants.sub_upgrade_range.get(stat)) * profile.stat_weights.get(stat)) for stat in
+    stat_scores = [(stat, eval_func(constants.sub_upgrade_range.get(stat)) * profile.get_stat_weight(stat)) for stat in
                    avail_stats]
     stat = eval_func(stat_scores, key=lambda x: x[1])[0]
     rune.subs.append(RuneStat(stat, eval_func(constants.sub_upgrade_range.get(stat))))
@@ -87,23 +87,23 @@ class RuneStat:
         :return: the score of this rune stat
         """
         if innate:
-            res = self.value * profile.innate_weights.get(self.stat)
+            res = self.value * profile.get_stat_weight(self.stat)
             logging.info(
-                f"{self.stat} is scored as innate with weight {profile.innate_weights.get(self.stat)} and result {res}")
+                f"{self.stat} is scored as innate with weight {profile.get_innate_weight(self.stat)} and result {res}")
             return res
 
         avg_roll_count = self.get_roll_count()
         if not main and avg_roll_count >= 4:
-            roll_count_scale = profile.quad_roll_scale
+            roll_count_scale = profile.get_quad_scale()
         elif not main and avg_roll_count >= 3:
-            roll_count_scale = profile.triple_roll_scale
+            roll_count_scale = profile.get_triple_scale()
         else:
             roll_count_scale = 1
 
-        weight = profile.stat_weights.get(self.stat)
+        weight = profile.get_stat_weight(self.stat)
         res = self.value * weight * roll_count_scale
         logging.info(
-            f"{self.stat} is scored with weight {profile.innate_weights.get(self.stat)}, roll scale {roll_count_scale} and result {res}")
+            f"{self.stat} is scored with weight {profile.get_innate_weight(self.stat)}, roll scale {roll_count_scale} and result {res}")
         return res
 
     def __copy__(self):

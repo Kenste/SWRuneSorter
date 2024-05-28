@@ -1,4 +1,4 @@
-import constants
+from runescorer import constants
 
 
 def max_index_val(l: [int]) -> tuple[int, int]:
@@ -25,11 +25,11 @@ class AvailableStatsAndScore:
         self.avail_mains = constants.slot_to_available_mainstat.get(slot).copy()
         self.avail_subs = constants.slot_to_available_substat.get(slot).copy()
         # get the max score of each stat
-        self.main_scores = [profile.stat_weights.get(main) *
+        self.main_scores = [profile.get_stat_weight(main) *
                             constants.primary_upgrade_changes.get(main)[main_score_index] for main in self.avail_mains]
-        self.sub_scores = [profile.stat_weights.get(sub) *
+        self.sub_scores = [profile.get_stat_weight(sub) *
                            constants.sub_upgrade_range.get(sub)[sub_score_index] for sub in self.avail_subs]
-        self.innate_scores = [profile.innate_weights.get(sub) *
+        self.innate_scores = [profile.get_innate_weight(sub) *
                               constants.sub_upgrade_range.get(sub)[sub_score_index] for sub in self.avail_subs]
 
     def remove_stat_option(self, index, substat=True) -> None:
