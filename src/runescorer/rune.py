@@ -173,7 +173,7 @@ class Rune:
         """
         max_rune = copy(self)
         _upgrade_max_potential_stat(max_rune, profile)
-        if max_rune.quality == constants.Quality.Hero:
+        if max_rune.quality == constants.Quality.Hero and max_rune.remaining_upgrades() > 0:
             _add_new_stat(max_rune, profile, max)
         _max_main_stat(max_rune)
         return max_rune.normalized_score(profile)
