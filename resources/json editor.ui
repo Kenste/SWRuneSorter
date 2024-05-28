@@ -6,8 +6,8 @@
   </project>
   <object class="tk.Toplevel" id="editorWindow" named="True">
     <property name="height">200</property>
-    <property name="width">200</property>
     <property name="title" translatable="yes">Weight Profile Editor</property>
+    <property name="width">200</property>
     <child>
       <object class="pygubu.builder.widgets.combobox" id="box" named="True">
         <property name="state">normal</property>
@@ -258,6 +258,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ATKEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -270,6 +271,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ATKPEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -282,6 +284,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="DEFEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -294,6 +297,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="DEFPEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -306,6 +310,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="HPEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -318,6 +323,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="HPPEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -330,6 +336,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="SPDEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -342,6 +349,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="CRateEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -354,6 +362,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="CDmgEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -366,6 +375,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="RESEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -378,6 +388,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ACCEntry1" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -616,7 +627,7 @@
             <property name="justify">left</property>
             <property name="relief">flat</property>
             <property name="state">normal</property>
-            <property name="text" translatable="yes">= Min Roll Score</property>
+            <property name="text" translatable="yes">= Max Roll Score</property>
             <layout manager="grid">
               <property name="column">2</property>
               <property name="padx">2</property>
@@ -827,6 +838,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ATKEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -839,6 +851,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ATKPEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -851,6 +864,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="DEFEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -863,6 +877,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="DEFPEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -875,6 +890,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="HPEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -887,6 +903,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="HPPEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -899,6 +916,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="SPDEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -911,6 +929,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="CRateEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -923,6 +942,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="CDmgEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -935,6 +955,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="RESEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -947,6 +968,7 @@
         </child>
         <child>
           <object class="pygubu.forms.ttkwidget.Entry" id="ACCEntry2" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <property name="width">15</property>
@@ -1185,7 +1207,7 @@
             <property name="justify">left</property>
             <property name="relief">flat</property>
             <property name="state">normal</property>
-            <property name="text" translatable="yes">= Min Roll Score</property>
+            <property name="text" translatable="yes">= Max Roll Score</property>
             <layout manager="grid">
               <property name="column">2</property>
               <property name="padx">2</property>
@@ -1222,15 +1244,6 @@
           </object>
         </child>
         <child>
-          <object class="ttk.Entry" id="nameEntry" named="True">
-            <layout manager="grid">
-              <property name="column">1</property>
-              <property name="pady">2</property>
-              <property name="row">0</property>
-            </layout>
-          </object>
-        </child>
-        <child>
           <object class="ttk.Label" id="tripleLabel" named="True">
             <property name="compound">top</property>
             <property name="cursor">arrow</property>
@@ -1249,6 +1262,7 @@
         </child>
         <child>
           <object class="ttk.Entry" id="tripleEntry" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <layout manager="grid">
@@ -1276,6 +1290,7 @@
         </child>
         <child>
           <object class="ttk.Entry" id="quadEntry" named="True">
+            <property name="state">disabled</property>
             <property name="validate">key</property>
             <property name="validatecommand" type="command" cbtype="entry_validate" args="%P">validate_float_entry</property>
             <layout manager="grid">
@@ -1284,6 +1299,22 @@
               <property name="row">2</property>
               <property name="sticky">e</property>
             </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="nameFrame" named="True">
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+            <child>
+              <object class="ttk.Entry" id="nameEntry" named="True">
+                <property name="state">disabled</property>
+                <layout manager="pack" />
+              </object>
+            </child>
           </object>
         </child>
       </object>
