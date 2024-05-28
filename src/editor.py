@@ -108,8 +108,9 @@ class Editor:
         profiles = json_helper.weight_profiles_from_json(file_path)
         for profile in profiles:
             scorer.add_profile(profile)
-        self._update_profile_list()
         self.current_profile = scorer.get_profiles()[0]
+        self._update_profile_list()
+        self._map_profile_values_to_entries()
 
     def validate_float_entry(self, new_value: str) -> bool:
         if new_value == "":
