@@ -1,64 +1,33 @@
 [
   {
     "name": "DPS",
-    "triple roll scale": 1.05,
-    "quad roll scale": 1.2,
-    "stat weights": {
-      "ATK": 0.01,
-      "ATK%": 1,
-      "DEF": 0.01,
+    "stat_weights": {
+      "ATK": 0.0,
+      "ATK%": 1.0,
+      "DEF": 0.0,
       "DEF%": 0.5,
-      "HP": 0.01,
+      "HP": 0.0,
       "HP%": 0.5,
-      "SPD": 2,
-      "CRate": 1.5,
+      "SPD": 1.8,
+      "CRate": 1.7,
       "CDmg": 1.5,
       "RES": 0.5,
-      "ACC": 0.5
+      "ACC": 0.38
     },
-    "innate weights": {
-      "ATK": 0.02,
-      "ATK%": 0.8,
-      "DEF": 0.02,
-      "DEF%": 0.8,
-      "HP": 0.02,
-      "HP%": 1,
-      "SPD": 1,
-      "CRate": 0.75,
-      "CDmg": 0.75,
-      "RES": 0.7,
-      "ACC": 0.8
-    }
-  },
-  {
-    "name": "Support",
-    "triple roll scale": 1.05,
-    "quad roll scale": 1.2,
-    "stat weights": {
-      "ATK": 0.01,
-      "ATK%": 0.5,
-      "DEF": 0.01,
-      "DEF%": 1,
-      "HP": 0.01,
-      "HP%": 1,
-      "SPD": 2,
-      "CRate": 0.5,
-      "CDmg": 0.5,
-      "RES": 0.5,
-      "ACC": 1
+    "innate_weights": {
+      "ATK": 0.0,
+      "ATK%": 0.125,
+      "DEF": 0.0,
+      "DEF%": 0.25,
+      "HP": 0.0,
+      "HP%": 0.25,
+      "SPD": 0.2,
+      "CRate": 0.2,
+      "CDmg": 0.17,
+      "RES": 0.25,
+      "ACC": 0.19
     },
-    "innate weights": {
-      "ATK": 0.02,
-      "ATK%": 1,
-      "DEF": 0.02,
-      "DEF%": 0.5,
-      "HP": 0.02,
-      "HP%": 0.5,
-      "SPD": 1,
-      "CRate": 1,
-      "CDmg": 1,
-      "RES": 1,
-      "ACC": 0.5
-    }
+    "triple_roll_scale": 1.05,
+    "quad_roll_scale": 1.2
   }
 ]
