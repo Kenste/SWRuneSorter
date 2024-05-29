@@ -92,6 +92,14 @@ class RuneStat:
                 f"{self.stat} is scored as innate with weight {profile.get_innate_weight(self.stat)} and result {res}")
             return res
 
+        if main:
+            # TODO: experiment with and find better solution to make main stat not dominate the score on 2/4/6
+            # current attempt is to essentially score main stat as a normal stat and keep the score fixed
+            # this leads to wished for main stats to give more score than others, however leads to other main stats
+            # being acceptable, e.g. DEF% on DPS rune.
+            res = constants.primary_upgrade_changes.get(self.stat)[0] * profile.get_stat_weight(self.stat)
+            return res
+
         avg_roll_count = self.get_roll_count()
         if not main and avg_roll_count >= 4:
             roll_count_scale = profile.get_quad_scale()
