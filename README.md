@@ -45,3 +45,8 @@ The runes that are considered by this project are limited to 6-star runes of her
 5-star or lower runes will be compared to 6-star runes. 
 Endgame players may not need this tool, as they have sufficient knowledge of runes. 
 This project is made by a beginner who wants to automate the boring and repetitive task of upgrading and selling useless runes.
+
+# ScreenMarker
+## Overview
+The ScreenMarker component is designed to assist in the marking of relevant locations on the screen for the main application. 
+This can be a button to click on or a Region of Interest (ROI) to read information from. 
