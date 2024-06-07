@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.4" author="PygubuDesigner 0.39.3">
+  <project>
+    <settings />
+    <customwidgets />
+  </project>
+  <object class="tk.Toplevel" id="mainframe" named="True">
+    <property name="geometry">480x320</property>
+    <property name="title" translatable="yes">ScreenMarker</property>
+    <child>
+      <object class="ttk.Label" id="promptLabel" named="True">
+        <property name="text" translatable="yes">Prompt:</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="row">0</property>
+          <property name="sticky">w</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="canvasFrame" named="True">
+        <property name="height">400</property>
+        <property name="width">500</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="row">1</property>
+        </layout>
+        <child>
+          <object class="pygubu.builder.widgets.scrolledframe" id="scrolledframe2">
+            <property name="scrolltype">both</property>
+            <property name="usemousewheel">true</property>
+            <layout manager="pack">
+              <property name="expand">true</property>
+              <property name="fill">both</property>
+            </layout>
+            <child>
+              <object class="tk.Canvas" id="canvas" named="True">
+                <layout manager="pack">
+                  <property name="side">top</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="screen" named="True">
+            <property name="command" type="command" cbtype="simple">screenshotClicked</property>
+            <property name="compound">top</property>
+            <property name="default">normal</property>
+            <property name="text" translatable="yes">Screenshot</property>
+            <layout manager="pack" />
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Frame" id="controls" named="True">
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="row">1</property>
+        </layout>
+        <child>
+          <object class="ttk.Combobox" id="currentMarker" named="True">
+            <bind sequence="&lt;&lt;ComboboxSelected&gt;&gt;" handler="on_combobox_selected" add="" />
+            <layout manager="pack">
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Treeview" id="markersStatus" named="True">
+            <property name="selectmode">extended</property>
+            <layout manager="pack">
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Frame" id="frame4" named="True">
+            <property name="height">200</property>
+            <property name="width">200</property>
+            <layout manager="pack" />
+            <child>
+              <object class="ttk.Button" id="prev" named="True">
+                <property name="command" type="command" cbtype="simple">previousClicked</property>
+                <property name="text" translatable="yes">Previous</property>
+                <layout manager="grid">
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="ttk.Button" id="next" named="True">
+                <property name="command" type="command" cbtype="simple">nextClicked</property>
+                <property name="text" translatable="yes">Next</property>
+                <layout manager="grid">
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
