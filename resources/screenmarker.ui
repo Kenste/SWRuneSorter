@@ -5,59 +5,27 @@
     <customwidgets />
   </project>
   <object class="tk.Toplevel" id="mainframe" named="True">
-    <property name="geometry">480x320</property>
+    <property name="geometry">1024x576</property>
     <property name="title" translatable="yes">ScreenMarker</property>
     <child>
       <object class="ttk.Label" id="promptLabel" named="True">
         <property name="text" translatable="yes">Prompt:</property>
-        <layout manager="grid">
-          <property name="column">0</property>
-          <property name="row">0</property>
-          <property name="sticky">w</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.0</property>
+          <property name="x">0</property>
+          <property name="y">0</property>
         </layout>
-      </object>
-    </child>
-    <child>
-      <object class="ttk.Frame" id="canvasFrame" named="True">
-        <property name="height">400</property>
-        <property name="width">500</property>
-        <layout manager="grid">
-          <property name="column">0</property>
-          <property name="row">1</property>
-        </layout>
-        <child>
-          <object class="pygubu.builder.widgets.scrolledframe" id="scrolledframe2">
-            <property name="scrolltype">both</property>
-            <property name="usemousewheel">true</property>
-            <layout manager="pack">
-              <property name="expand">true</property>
-              <property name="fill">both</property>
-            </layout>
-            <child>
-              <object class="tk.Canvas" id="canvas" named="True">
-                <layout manager="pack">
-                  <property name="side">top</property>
-                </layout>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="ttk.Button" id="screen" named="True">
-            <property name="command" type="command" cbtype="simple">screenshotClicked</property>
-            <property name="compound">top</property>
-            <property name="default">normal</property>
-            <property name="text" translatable="yes">Screenshot</property>
-            <layout manager="pack" />
-          </object>
-        </child>
       </object>
     </child>
     <child>
       <object class="ttk.Frame" id="controls" named="True">
-        <layout manager="grid">
-          <property name="column">1</property>
-          <property name="row">1</property>
+        <layout manager="place">
+          <property name="anchor">nw</property>
+          <property name="relx">0.0</property>
+          <property name="rely">0.0</property>
+          <property name="x">0</property>
+          <property name="y">100</property>
         </layout>
         <child>
           <object class="ttk.Combobox" id="currentMarker" named="True">
@@ -100,6 +68,41 @@
                 </layout>
               </object>
             </child>
+            <child>
+              <object class="ttk.Button" id="button2" named="True">
+                <property name="command" type="command" cbtype="simple">screenshotClicked</property>
+                <property name="compound">top</property>
+                <property name="default">normal</property>
+                <property name="text" translatable="yes">Screenshot</property>
+                <layout manager="grid">
+                  <property name="column">3</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="pygubu.builder.widgets.scrolledframe" id="scrolledframe1">
+        <property name="scrolltype">both</property>
+        <property name="usemousewheel">true</property>
+        <layout manager="place">
+          <property name="anchor">e</property>
+          <property name="relheight">0.9</property>
+          <property name="relwidth">0.72</property>
+          <property name="relx">0.99</property>
+          <property name="rely">0.5</property>
+          <property name="x">0</property>
+        </layout>
+        <child>
+          <object class="tk.Canvas" id="canvas" named="True">
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+            </layout>
           </object>
         </child>
       </object>
