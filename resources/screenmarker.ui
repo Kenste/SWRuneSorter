@@ -28,58 +28,69 @@
           <property name="y">100</property>
         </layout>
         <child>
-          <object class="ttk.Combobox" id="currentMarker" named="True">
+          <object class="ttk.Button" id="button3" named="True">
+            <property name="command" type="command" cbtype="simple">previous_clicked</property>
+            <property name="text" translatable="yes">Previous</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="button4" named="True">
+            <property name="command" type="command" cbtype="simple">next_clicked</property>
+            <property name="text" translatable="yes">Next</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="screenshot" named="True">
+            <property name="command" type="command" cbtype="simple">screenshot_clicked</property>
+            <property name="compound">top</property>
+            <property name="default">normal</property>
+            <property name="text" translatable="yes">Screenshot</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="add" named="True">
+            <property name="command" type="command" cbtype="simple">add_clicked</property>
+            <property name="compound">top</property>
+            <property name="default">normal</property>
+            <property name="text" translatable="yes">Add</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="row">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Button" id="delete" named="True">
+            <property name="command" type="command" cbtype="simple">delete_clicked</property>
+            <property name="compound">top</property>
+            <property name="text" translatable="yes">Delete</property>
+            <layout manager="grid">
+              <property name="column">1</property>
+              <property name="row">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="ttk.Combobox" id="combobox" named="True">
+            <property name="state">readonly</property>
             <bind sequence="&lt;&lt;ComboboxSelected&gt;&gt;" handler="on_combobox_selected" add="" />
-            <layout manager="pack">
-              <property name="side">top</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="columnspan">2</property>
+              <property name="row">4</property>
             </layout>
-          </object>
-        </child>
-        <child>
-          <object class="ttk.Treeview" id="markersStatus" named="True">
-            <property name="selectmode">extended</property>
-            <layout manager="pack">
-              <property name="side">top</property>
-            </layout>
-          </object>
-        </child>
-        <child>
-          <object class="ttk.Frame" id="frame4" named="True">
-            <property name="height">200</property>
-            <property name="width">200</property>
-            <layout manager="pack" />
-            <child>
-              <object class="ttk.Button" id="prev" named="True">
-                <property name="command" type="command" cbtype="simple">previousClicked</property>
-                <property name="text" translatable="yes">Previous</property>
-                <layout manager="grid">
-                  <property name="column">1</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Button" id="next" named="True">
-                <property name="command" type="command" cbtype="simple">nextClicked</property>
-                <property name="text" translatable="yes">Next</property>
-                <layout manager="grid">
-                  <property name="column">2</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
-            <child>
-              <object class="ttk.Button" id="button2" named="True">
-                <property name="command" type="command" cbtype="simple">screenshotClicked</property>
-                <property name="compound">top</property>
-                <property name="default">normal</property>
-                <property name="text" translatable="yes">Screenshot</property>
-                <layout manager="grid">
-                  <property name="column">3</property>
-                  <property name="row">0</property>
-                </layout>
-              </object>
-            </child>
           </object>
         </child>
       </object>
@@ -89,12 +100,12 @@
         <property name="scrolltype">both</property>
         <property name="usemousewheel">true</property>
         <layout manager="place">
-          <property name="anchor">e</property>
+          <property name="anchor">w</property>
           <property name="relheight">0.9</property>
-          <property name="relwidth">0.72</property>
-          <property name="relx">0.99</property>
+          <property name="relwidth">0.77</property>
+          <property name="relx">0.0</property>
           <property name="rely">0.5</property>
-          <property name="x">0</property>
+          <property name="x">200</property>
         </layout>
         <child>
           <object class="tk.Canvas" id="canvas" named="True">
