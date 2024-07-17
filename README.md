@@ -65,3 +65,8 @@ The script will automatically move your mouse to select runes, take screenshots 
 use the determined score to upgrade or sell the selected rune.
 The script should not sell any of your already upgraded runes on its own.
 After going through all 6 slots of runes, the script will stop.
+
+### Limitation
+The tool uses hardcoded delays for navigating the menu and different animation when upgrading.
+However, certain actions, such as selling or upgrading, require communication with the server with inconsistent delays, 
+leading to unexpected behaviour, e.g. skipping runes after selling a rune.
