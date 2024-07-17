@@ -1,3 +1,6 @@
 enum34
 pygubu
 pillow
+PyAutoGUI
+opencv-python
+numpy
