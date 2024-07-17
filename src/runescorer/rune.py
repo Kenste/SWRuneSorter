@@ -94,10 +94,11 @@ class RuneStat:
 
         if main:
             # TODO: experiment with and find better solution to make main stat not dominate the score on 2/4/6
-            # current attempt is to essentially score main stat as a normal stat and keep the score fixed
-            # this leads to wished for main stats to give more score than others, however leads to other main stats
-            # being acceptable, e.g. DEF% on DPS rune.
-            res = constants.primary_upgrade_changes.get(self.stat)[0] * profile.get_stat_weight(self.stat)
+            # current attempt is to use the stat's max value as a substat
+            # i.e. mainstat is just as valuable as a perfect rolled substat
+            # i want to make it less valuable, so that mainstat is not 50% of the rune.
+            # it should be 30%-40%, i.e. make a big difference, but not make basically any shit rune pass the threshold
+            res = constants.sub_upgrade_range.get(self.stat)[1] * 3 * profile.get_stat_weight(self.stat)
             return res
 
         avg_roll_count = self.get_roll_count()
