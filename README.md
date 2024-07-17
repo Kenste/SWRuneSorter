@@ -46,7 +46,22 @@ The runes that are considered by this project are limited to 6-star runes of her
 Endgame players may not need this tool, as they have sufficient knowledge of runes. 
 This project is made by a beginner who wants to automate the boring and repetitive task of upgrading and selling useless runes.
 
-# ScreenMarker
-## Overview
+# Components
+## ScreenMarker
+### Overview
 The ScreenMarker component is designed to assist in the marking of relevant locations on the screen for the main application. 
 This can be a button to click on or a Region of Interest (ROI) to read information from. 
+
+## RuneUpgrader
+A cli tool that requires the `json-dump.json` from the `ScreenMarker` component to be in the current working directory.
+The manage rune window should be open with no filter applied, sorted by `Power-up Lv.` descending and no slots selected:
+![Manage Runes.png](resources/readme/manage-runes.png)
+Launch while the game is running with:
+```bash
+python rune_upgrader.py
+```
+
+The script will automatically move your mouse to select runes, take screenshots and use ocr to recognize runes and 
+use the determined score to upgrade or sell the selected rune.
+The script should not sell any of your already upgraded runes on its own.
+After going through all 6 slots of runes, the script will stop.
