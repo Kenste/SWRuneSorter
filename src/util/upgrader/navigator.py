@@ -49,6 +49,9 @@ class Navigator:
     def close_rune(self):
         pyautogui.press("esc")
 
+    def reset_rune_i(self):
+        self._rune_i = 0
+
     def sell_rune(self, level: int = 9) -> None:
         pyautogui.moveTo(self._sell_button)
         pyautogui.click()

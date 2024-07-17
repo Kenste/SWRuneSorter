@@ -36,6 +36,7 @@ def main():
 
     for slot in navigator.slot_iterator():
         iterations = 0
+        navigator.reset_rune_i()
         while iterations < len(data["runes_row"]):
             navigator.open_next_rune()
             rune = read_rune(scanner)
