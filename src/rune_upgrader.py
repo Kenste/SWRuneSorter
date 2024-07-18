@@ -35,6 +35,7 @@ def main():
     kept_runes = []
     # TODO: configure
     score_threshold = 60
+    max_retries = 5
 
     for slot in navigator.slot_iterator():
         iterations = 0
@@ -42,6 +43,13 @@ def main():
         while iterations < len(data["runes_row"]):
             navigator.open_next_rune()
             rune = read_rune(scanner)
+            retries = 0
+            while rune is None:
+                time.sleep(1)
+                rune = read_rune(scanner)
+                retries += 1
+                if retries >= max_retries:
+                    sys.exit(f"Could not read rune after upgrading in {retries} retries!")
             if rune is None:
                 navigator.increment_rune_i()
                 iterations += 1
@@ -52,7 +60,7 @@ def main():
             print(scorer.max_score(rune), rune)
             iterations = 0
 
-            if rune.level >= 12:
+            if rune.level >= 1:
                 print(f"Finished Slot {slot}\n")
                 navigator.close_rune()
                 break
@@ -71,7 +79,7 @@ def main():
                     time.sleep(1)
                     rune = read_rune(scanner)
                     retries += 1
-                    if retries >= 10:
+                    if retries >= max_retries:
                         sys.exit(f"Could not read rune after upgrading in {retries} retries!")
                 print(scorer.max_score(rune), rune)
                 if scorer.max_score(rune)[0] < score_threshold:
@@ -88,7 +96,7 @@ def main():
                         time.sleep(1)
                         rune = read_rune(scanner)
                         retries += 1
-                        if retries >= 10:
+                        if retries >= max_retries:
                             sys.exit(f"Could not read rune after upgrading in {retries} retries!")
                     print(scorer.max_score(rune), rune)
                     if scorer.max_score(rune)[0] < score_threshold:
