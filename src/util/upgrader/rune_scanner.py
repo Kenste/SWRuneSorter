@@ -71,7 +71,7 @@ class Scanner:
         # cv2.waitKey(0)
         # cv2.destroyAllWindows()
 
-        name = pytesseract.image_to_string(img_name).strip()
+        name = pytesseract.image_to_string(img_name, config=r"--oem 3 --psm 7").strip()
         slot_pattern = re.compile(r".*\((\d)\)")
         slot_match = slot_pattern.match(name)
         slot = int(slot_match.group(1))
@@ -85,17 +85,17 @@ class Scanner:
 
         quality = pytesseract.image_to_string(img_quality).strip()
 
-        main = pytesseract.image_to_string(img_main).strip()
+        main = pytesseract.image_to_string(img_main, config=r"--oem 3 --psm 7").strip()
         main = extract_stat_and_value(main)
 
-        innate = pytesseract.image_to_string(img_innate).strip()
+        innate = pytesseract.image_to_string(img_innate, config=r"--oem 3 --psm 7").strip()
         innate = extract_stat_and_value(innate)
 
         if innate is not None:
             innate = RuneStat(innate[0], innate[1])
 
         new_subs = []
-        subs = pytesseract.image_to_string(img_subs).strip().split("\n")
+        subs = pytesseract.image_to_string(img_subs, config=r"--oem 3 --psm 6").strip().split("\n")
         for sub in subs:
             if sub == "":
                 continue
