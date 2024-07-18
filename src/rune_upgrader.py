@@ -43,13 +43,6 @@ def main():
         while iterations < len(data["runes_row"]):
             navigator.open_next_rune()
             rune = read_rune(scanner)
-            retries = 0
-            while rune is None:
-                time.sleep(1)
-                rune = read_rune(scanner)
-                retries += 1
-                if retries >= max_retries:
-                    sys.exit(f"Could not read rune after upgrading in {retries} retries!")
             if rune is None:
                 navigator.increment_rune_i()
                 iterations += 1
