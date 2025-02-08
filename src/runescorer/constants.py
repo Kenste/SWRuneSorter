@@ -1,6 +1,12 @@
 from enum import StrEnum
 
 
+class StatLocation(StrEnum):
+    Main = "Main"
+    Innate = "Innate"
+    Sub = "Sub"
+
+
 class Stat(StrEnum):
     ATK = "ATK"
     ATK_P = "ATK%"
