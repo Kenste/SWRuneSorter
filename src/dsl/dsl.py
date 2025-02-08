@@ -1,5 +1,13 @@
+import attributes
 import stats
 from src.runescorer import constants
+
+Level = attributes.Level()
+Legend = attributes.Quality(constants.Quality.Legend)
+Hero = attributes.Quality(constants.Quality.Hero)
+Stars = attributes.Stars()
+Slot = attributes.Slot()
+Set = attributes.Set()
 
 ATK = stats.ATK()
 ATK_P = stats.ATK_P()

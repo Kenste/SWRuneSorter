@@ -14,11 +14,12 @@ class RuneStat:
 
 class Rune:
     def __init__(self, main: RuneStat, innate: RuneStat, subs: List[RuneStat], level: int, slot: int,
-                 quality: Quality, set: str):
+                 quality: Quality, set: str, stars: int):
         self.set = set
         self.level = level
         self.quality = quality
         self.slot = slot
+        self.stars = stars
 
         self.main = main
         self.innate = innate

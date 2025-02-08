@@ -19,7 +19,7 @@ This DSL is an embedded DSL written in python.
 
 The DSL should support easy access to rune attributes:
 - `Level`: Current upgrade level (e.g., `Level == 0`)
-- `Rarity`: Rune rarity (e.g. `Legend`)
+- `Quality`: Rune quality (e.g. `Legend`)
 - `Stars`: Rune stars (e.g. `Stars == 5`)
 - `Slot`: Rune slot (e.g. `Slot == 1`)
 - `Set`: Rune set (e.g., `Set == "Violent"` or `Set.In(["Swift", "Rage"])`)
