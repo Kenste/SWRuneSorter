@@ -1,17 +1,27 @@
 from src.runescorer import constants
-from src.runescorer.rune import Rune, RuneStat
+from src.runescorer.rune import Rune
 
 
 class Stat:
     def __init__(self, stat: constants.Stat, location: constants.StatLocation):
         self._stat = stat
-        self._rune_stat: RuneStat = None
         self._stat_location = location
 
-    def _get_value(self) -> int:
-        if self._rune_stat is None:
-            raise ValueError("Trying to read the value of stat that is not present or was not checked for presence!")
-        return self._rune_stat.value
+    def _get_value(self, rune: Rune) -> int:
+        if self._stat_location == constants.StatLocation.Main:
+            if rune.main.stat == self._stat:
+                return rune.main.value
+
+        elif self._stat_location == constants.StatLocation.Innate:
+            if rune.innate.stat == self._stat:
+                return rune.innate.value
+
+        elif self._stat_location == constants.StatLocation.Sub:
+            for sub in rune.subs:
+                if sub.stat == self._stat:
+                    return sub.value
+
+        raise ValueError("No Value Found! Check if stat if present first!")
 
     def _is_present(self, rune: Rune) -> bool:
         if self._stat_location == constants.StatLocation.Main:
@@ -33,19 +43,21 @@ class Stat:
         return False
 
     def __lt__(self, other):
-        return lambda rune: self._is_present(rune) and self._get_value() < other
+        return lambda rune: self._is_present(rune) and self._get_value(rune) < other
 
     def __le__(self, other):
-        return lambda rune: self._is_present(rune) and self._get_value() <= other
+        return lambda rune: self._is_present(rune) and self._get_value(rune) <= other
 
     def __gt__(self, other):
-        return lambda rune: self._is_present(rune) and self._get_value() > other
+        return lambda rune: self._is_present(rune) and self._get_value(rune) > other
 
     def __ge__(self, other):
-        return lambda rune: self._is_present(rune) and self._get_value() >= other
+        return lambda rune: self._is_present(rune) and self._get_value(rune) >= other
 
     def __eq__(self, other):
-        return lambda rune: self._is_present(rune) and self._get_value() == other
+        return lambda rune: self._is_present(rune) and (
+                self._stat_location == constants.StatLocation.Main or self._get_value(rune) == other
+        )
 
     def __ne__(self, other):
         return not self.__eq__(other)
