@@ -32,7 +32,7 @@ class Stat:
                 return True
 
         elif self._stat_location == constants.StatLocation.Innate:
-            if rune.innate.stat == self._stat:
+            if rune.innate is not None and rune.innate.stat == self._stat:
                 self._rune_stat = rune.innate
                 return True
 
