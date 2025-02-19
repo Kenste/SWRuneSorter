@@ -23,7 +23,7 @@ class Stat:
                 if sub.stat == self._stat:
                     return sub.value
 
-        raise ValueError("No Value Found! Check if stat if present first!")
+        raise ValueError("No Value Found! Check if stat is present first!")
 
     def _is_present(self, rune: Rune) -> bool:
         if self._stat_location == constants.StatLocation.Main:
