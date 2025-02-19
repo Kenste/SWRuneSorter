@@ -28,18 +28,15 @@ class Stat:
     def _is_present(self, rune: Rune) -> bool:
         if self._stat_location == constants.StatLocation.Main:
             if rune.main.stat == self._stat:
-                self._rune_stat = rune.main
                 return True
 
         elif self._stat_location == constants.StatLocation.Innate:
             if rune.innate is not None and rune.innate.stat == self._stat:
-                self._rune_stat = rune.innate
                 return True
 
         elif self._stat_location == constants.StatLocation.Sub:
             for sub in rune.subs:
                 if sub.stat == self._stat:
-                    self._rune_stat = sub
                     return True
 
         return False
