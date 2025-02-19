@@ -1,3 +1,5 @@
+from typing import Callable
+
 from src.runescorer import constants
 from src.runescorer.rune import Rune
 
@@ -42,25 +44,25 @@ class Stat:
 
         return False
 
-    def __lt__(self, other):
+    def __lt__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: self._is_present(rune) and self._get_value(rune) < other
 
-    def __le__(self, other):
+    def __le__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: self._is_present(rune) and self._get_value(rune) <= other
 
-    def __gt__(self, other):
+    def __gt__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: self._is_present(rune) and self._get_value(rune) > other
 
-    def __ge__(self, other):
+    def __ge__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: self._is_present(rune) and self._get_value(rune) >= other
 
-    def __eq__(self, other):
+    def __eq__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: self._is_present(rune) and (
                 self._stat_location == constants.StatLocation.Main or self._get_value(rune) == other
         )
 
-    def __ne__(self, other):
-        return not self.__eq__(other)
+    def __ne__(self, other) -> Callable[[Rune], bool]:
+        return lambda rune: not self.__eq__(other)
 
 
 class ATK(Stat):
