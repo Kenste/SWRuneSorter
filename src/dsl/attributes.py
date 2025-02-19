@@ -25,14 +25,11 @@ class Level:
 
 
 class Quality:
-    def __init__(self, quality: constants.Quality):
-        self._quality = quality
-
     def __eq__(self, other: constants.Quality) -> Callable[[Rune], bool]:
-        return lambda rune: rune.quality == self._quality
+        return lambda rune: rune.quality == other
 
     def __ne__(self, other: constants.Quality) -> Callable[[Rune], bool]:
-        return lambda rune: rune.quality != self._quality
+        return lambda rune: rune.quality != other
 
 
 class Stars:
