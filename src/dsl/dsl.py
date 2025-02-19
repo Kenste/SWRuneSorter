@@ -1,6 +1,11 @@
 import attributes
 import stats
+from logic import AND, OR, NOT
 from src.runescorer import constants
+
+AND = AND
+OR = OR
+NOT = NOT
 
 Level = attributes.Level()
 Legend = attributes.Quality() == constants.Quality.Legend
