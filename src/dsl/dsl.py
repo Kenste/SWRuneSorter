@@ -1,12 +1,13 @@
 import attributes
+import operators
 import stats
 from logic import AND, OR, NOT
 from runescorer.rune import Rune, RuneStat
 from src.runescorer import constants
 
-AND = AND
-OR = OR
-NOT = NOT
+AND = operators.AND
+OR = operators.OR
+NOT = operators.NOT
 
 Level = attributes.Level()
 Legend = attributes.Quality() == constants.Quality.Legend
