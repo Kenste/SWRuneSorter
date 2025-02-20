@@ -23,6 +23,12 @@ class Level:
     def __ne__(self, other: int) -> Callable[[Rune], bool]:
         return lambda rune: rune.level != other
 
+    def InRange(self, lower: int, upper: int) -> Callable[[Rune], bool]:
+        """
+        Inclusive range.
+        """
+        return lambda rune: rune.level in range(lower, upper + 1)
+
 
 class Quality:
     def __eq__(self, other: constants.Quality) -> Callable[[Rune], bool]:

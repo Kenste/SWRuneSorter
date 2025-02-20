@@ -103,16 +103,26 @@ if __name__ == '__main__':
     level_filter_success1 = Level == 4
     level_filter_success2 = Level >= 4
     level_filter_success3 = Level <= 4
+    level_filter_success4 = Level.InRange(1, 12)
+    level_filter_success5 = Level.InRange(4, 12)
+    level_filter_success6 = Level.InRange(1, 4)
     level_filter_fail1 = Level < 4
     level_filter_fail2 = Level > 4
     level_filter_fail3 = Level != 4
+    level_filter_fail4 = Level.InRange(1, 3)
+    level_filter_fail5 = Level.InRange(5, 12)
 
     assert level_filter_success1(rune)
     assert level_filter_success2(rune)
     assert level_filter_success3(rune)
+    assert level_filter_success4(rune)
+    assert level_filter_success5(rune)
+    assert level_filter_success6(rune)
     assert not level_filter_fail1(rune)
     assert not level_filter_fail2(rune)
     assert not level_filter_fail3(rune)
+    assert not level_filter_fail4(rune)
+    assert not level_filter_fail5(rune)
 
 
     # quality
