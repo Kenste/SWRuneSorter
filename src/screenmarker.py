@@ -3,7 +3,8 @@ import json
 from enum import StrEnum
 
 import pygubu
-from PIL import ImageGrab, ImageTk
+from tkinter import filedialog
+from PIL import ImageGrab, ImageTk, Image
 
 
 class CanvasState(StrEnum):
@@ -77,7 +78,13 @@ class ScreenMarker:
 
         if self.canvas_screenshot is not None:
             self.canvas.delete(self.canvas_screenshot)
-        img = ImageGrab.grab()
+        try:
+            img = ImageGrab.grab()
+        except:
+            file_path = filedialog.askopenfilename(
+                title="Cannot create a Screenshot, please select an image",
+            )
+            img = Image.open(file_path)
         self.screenshot = ImageTk.PhotoImage(img)
         self.canvas_screenshot = self.canvas.create_image(0, 0, image=self.screenshot, anchor="nw")
         self.canvas.configure(width=self.screenshot.width(), height=self.screenshot.height())
