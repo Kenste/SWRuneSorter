@@ -3,8 +3,7 @@ import sys
 import time
 import traceback
 
-from runescorer import scorer
-from util import json_helper
+from user_filter import rune_filter
 from util.upgrader.navigator import Navigator
 from util.upgrader.rune_scanner import Scanner
 
@@ -23,10 +22,6 @@ def read_rune(scanner: Scanner):
 
 
 def main():
-    profiles = json_helper.weight_profiles_from_json("../resources/weights.json")
-    for profile in profiles:
-        scorer.add_profile(profile)
-
     with open("json-dump.json", "r") as file:
         data = json.load(file)
     scanner = Scanner(data)
@@ -34,7 +29,6 @@ def main():
 
     kept_runes = []
     # TODO: configure
-    score_threshold = 60
     max_retries = 5
 
     for slot in navigator.slot_iterator():
@@ -50,7 +44,7 @@ def main():
 
             # TODO: do rune stuff
             print("Found Rune")
-            print(scorer.max_score(rune), rune)
+            print(rune)
             iterations = 0
 
             if rune.level >= 1:
@@ -58,8 +52,8 @@ def main():
                 navigator.close_rune()
                 break
 
-            if scorer.max_score(rune)[0] < score_threshold:
-                print("Sell - Low Score!")
+            if not rune_filter(rune):
+                print("Sell - Did not pass filter!")
                 if rune.quality == "Legend":
                     navigator.sell_rune(level=12)
                 else:
@@ -74,9 +68,9 @@ def main():
                     retries += 1
                     if retries >= max_retries:
                         sys.exit(f"Could not read rune after upgrading in {retries} retries!")
-                print(scorer.max_score(rune), rune)
-                if scorer.max_score(rune)[0] < score_threshold:
-                    print("Sell - Low Score!")
+                print(rune)
+                if not rune_filter(rune):
+                    print("Sell - Did not pass filter!")
                     if rune.quality == "Legend":
                         navigator.sell_rune(12)
                     else:
@@ -91,9 +85,9 @@ def main():
                         retries += 1
                         if retries >= max_retries:
                             sys.exit(f"Could not read rune after upgrading in {retries} retries!")
-                    print(scorer.max_score(rune), rune)
-                    if scorer.max_score(rune)[0] < score_threshold:
-                        print("Sell - Low Score!")
+                    print(rune)
+                    if not rune_filter(rune):
+                        print("Sell - Did not pass filter")
                         navigator.sell_rune(12)
                     else:
                         print("KEEP!")
@@ -102,7 +96,7 @@ def main():
     print("\n"*5)
     print("Kept Runes:")
     for rune in kept_runes:
-        print(scorer.max_score(rune), rune)
+        print(rune)
 
 
 if __name__ == '__main__':

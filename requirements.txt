@@ -5,3 +5,4 @@ PyAutoGUI
 opencv-python
 numpy
 pyscreenshot
+pytesseract
