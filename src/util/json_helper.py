@@ -2,7 +2,6 @@ import json
 
 from runescorer.constants import Quality, Stat
 from runescorer.rune import Rune, RuneStat
-from runescorer.weight import WeightProfile
 
 _stat_ID = [
     "null",
@@ -19,29 +18,6 @@ _stat_ID = [
     Stat.RES,
     Stat.ACC
 ]
-
-
-def weight_profiles_from_json(file_path: str) -> [WeightProfile]:
-    """
-    Deserializes the weight profiles given in the provided file.
-    :param file_path: the path to the file
-    :return: all parsed weight profiles
-    """
-    with open(file_path, "r") as file:
-        data = json.load(file)
-        return [WeightProfile(**profile_data) for profile_data in data]
-
-
-def profiles_to_json(file_path: str, profiles: [WeightProfile]) -> None:
-    """
-    Serializes the given weight profiles as JSON into the provided file.
-    :param file_path: the file to write the serialized weight profiles
-    :param profiles: the weight profiles to serialize
-    """
-    with open(file_path, "w") as file:
-        data = json.dumps([profile.to_json() for profile in profiles], indent=2)
-        file.write(data)
-
 
 def parse_runes_from_json(file_path: str) -> [Rune]:
     """
