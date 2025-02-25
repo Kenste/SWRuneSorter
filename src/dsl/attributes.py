@@ -1,6 +1,6 @@
 from typing import List, Callable
 
-from runescorer.rune import Rune
+from src.runescorer.rune import Rune
 from src.runescorer import constants
 
 

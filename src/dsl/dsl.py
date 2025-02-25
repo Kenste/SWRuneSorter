@@ -1,7 +1,5 @@
-import attributes
-import operators
-import stats
-from runescorer.rune import Rune, RuneStat
+from src.dsl import attributes, operators, stats
+from src.runescorer.rune import Rune, RuneStat
 from src.runescorer import constants
 
 AND = operators.AND
