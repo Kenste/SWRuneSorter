@@ -4,3 +4,4 @@ pillow
 PyAutoGUI
 opencv-python
 numpy
+pyscreenshot
