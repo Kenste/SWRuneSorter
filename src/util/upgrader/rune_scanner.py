@@ -74,6 +74,9 @@ class Scanner:
         slot_pattern = re.compile(r".*\((\d)\)")
         slot_match = slot_pattern.match(name)
         slot = int(slot_match.group(1))
+        set_pattern = re.compile(r"(\w+)\s+Rune")
+        set_match = re.search(set_pattern, name)
+        set = set_match.group(1)
 
         level_pattern = re.compile(r"\+(\d+)")
         level_match = level_pattern.match(name)
@@ -100,7 +103,7 @@ class Scanner:
                 continue
             new_subs.append(extract_stat_and_value(sub))
         return Rune(RuneStat(main[0], main[1]), innate, [RuneStat(sub[0], sub[1]) for sub in new_subs], level, slot,
-                    quality, set="", stars=6)
+                    quality, set=set, stars=6)
 
     def _sub_image(self, img: np.array, bbox: [int]) -> np.array:
         x1, y1, x2, y2 = bbox

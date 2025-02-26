@@ -26,4 +26,4 @@ class Rune:
         self.subs = subs
 
     def __str__(self):
-        return f"{self.main}, {self.innate}, {[str(sub) for sub in self.subs]}, {self.level}, {self.slot}, {self.quality}"
+        return f"{self.set} {self.main}, {self.innate}, {[str(sub) for sub in self.subs]}, {self.level}, {self.slot}, {self.quality}"
