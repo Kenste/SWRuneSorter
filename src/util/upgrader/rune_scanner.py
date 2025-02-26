@@ -62,7 +62,6 @@ class Scanner:
         img_main = self._sub_image(img, self._bbox_main)
         img_innate = self._sub_image(img, self._bbox_innate)
         img_subs = self._sub_image(img, self._bbox_substats)
-        img_subs = cv2.equalizeHist(img_subs)
         # cv2.imshow("Name", img_name)
         # cv2.imshow("Quality", img_quality)
         # cv2.imshow("Main", img_main)
@@ -101,7 +100,7 @@ class Scanner:
                 continue
             new_subs.append(extract_stat_and_value(sub))
         return Rune(RuneStat(main[0], main[1]), innate, [RuneStat(sub[0], sub[1]) for sub in new_subs], level, slot,
-                    quality)
+                    quality, set="", stars=6)
 
     def _sub_image(self, img: np.array, bbox: [int]) -> np.array:
         x1, y1, x2, y2 = bbox
