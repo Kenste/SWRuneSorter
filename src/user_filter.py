@@ -21,6 +21,8 @@ from dsl.dsl import (AND,
                      ACC,
                      Main,
                      Innate)
+from filter.level_9 import level_9
+from filter.level_12 import level_12
 
 # Modify the filtering of stats and attributes of a rune to your needs.
 # The `rune_filter` has to stay and will be used as the final filter.
@@ -67,69 +69,6 @@ level_0 = AND(
     Level.InRange(0, 8),
     level_0_subs
 )
-
-
-# Leave it empty for now and check final result
-level_9_subs = OR(
-    ATK_P >= 30,
-    DEF_P >= 30,
-    HP_P >= 30,
-    ACC >= 25,
-    RES >= 25,
-    SPD >= 20,
-    CRate >= 20,
-    CDmg >= 25,
-    AND(
-        Legend,
-        OR(
-            ATK_P >= 20,
-            DEF_P >= 20,
-            HP_P >= 20,
-            ACC >= 15,
-            RES >= 15,
-            SPD >= 14,
-            CRate >= 14,
-            CDmg >= 15
-        )
-    )
-)
-level_9 = AND(
-    Level.InRange(9, 11),
-    level_9_subs
-)
-
-
-# single stat threshold
-single_sub_12 = OR(
-    ATK_P >= 30,
-    DEF_P >= 30,
-    HP_P >= 30,
-    ACC >= 35,
-    RES >= 35,
-    SPD >= 20,
-    CRate >= 20,
-    CDmg >= 25
-)
-# thresholds for any combination of 2
-two_subs_12 = AtLeast(2,
-                     ATK_P >= 20,
-                     DEF_P >= 20,
-                     HP_P >= 20,
-                     ACC >= 15,
-                     RES >= 15,
-                     SPD >= 15,
-                     CRate >= 15,
-                     CDmg >= 15
-                     )
-level_12_subs = OR(
-    single_sub_12,
-    two_subs_12
-)
-level_12 = AND(
-    Level.InRange(12, 15),
-    level_12_subs
-)
-
 
 rune_filter = OR(
     Set == "Fight",
