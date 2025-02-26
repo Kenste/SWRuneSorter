@@ -1,6 +1,6 @@
 from typing import Callable
 
-from src.runescorer.rune import Rune
+from runescorer.rune import Rune
 
 
 def AND(*conditions: Callable[[Rune], bool]) -> Callable[[Rune], bool]:

@@ -1,7 +1,7 @@
 from typing import List, Callable
 
-from src.runescorer.rune import Rune
-from src.runescorer import constants
+from runescorer.rune import Rune
+from runescorer import constants
 
 
 class Level:

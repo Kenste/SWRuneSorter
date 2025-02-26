@@ -1,7 +1,7 @@
 from typing import Callable
 
-from src.runescorer import constants
-from src.runescorer.rune import Rune
+from runescorer import constants
+from runescorer.rune import Rune
 
 
 class Stat:

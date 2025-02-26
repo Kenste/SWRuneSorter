@@ -1,6 +1,6 @@
 from typing import List
 
-from src.runescorer.constants import Stat, Quality
+from runescorer.constants import Stat, Quality
 
 
 class RuneStat:

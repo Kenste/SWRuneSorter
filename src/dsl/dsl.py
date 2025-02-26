@@ -1,6 +1,6 @@
-from src.dsl import attributes, operators, stats
-from src.runescorer.rune import Rune, RuneStat
-from src.runescorer import constants
+from dsl import attributes, operators, stats
+from runescorer import constants
+from runescorer.rune import Rune, RuneStat
 
 AND = operators.AND
 OR = operators.OR
