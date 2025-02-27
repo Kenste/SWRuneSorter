@@ -55,7 +55,7 @@ no_flat_stat_main = OR(
     Slot.In([1, 3, 5])
 )
 
-level_0_subs = OR(
+stat_thresholds = OR(
     ATK_P >= 7,
     DEF_P >= 7,
     HP_P >= 7,
@@ -64,6 +64,16 @@ level_0_subs = OR(
     SPD >= 5,
     CRate >= 5,
     CDmg >= 5
+)
+no_more_than_1_flat_stat = NOT(AtLeast(
+    2,
+    ATK >= 0,
+    DEF >= 0,
+    HP >= 0
+))
+level_0_subs = AND(
+    stat_thresholds,
+    no_more_than_1_flat_stat
 )
 level_0 = AND(
     Level.InRange(0, 8),
