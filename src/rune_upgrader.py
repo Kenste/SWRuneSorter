@@ -25,7 +25,7 @@ def main():
     with open("json-dump.json", "r") as file:
         data = json.load(file)
     scanner = Scanner(data)
-    navigator = Navigator(data)
+    navigator = Navigator(data, base_delay=0)
 
     kept_runes = []
     # TODO: configure

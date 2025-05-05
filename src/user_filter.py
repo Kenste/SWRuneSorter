@@ -21,6 +21,8 @@ from dsl.dsl import (AND,
                      ACC,
                      Main,
                      Innate)
+from filter.level_9 import level_9
+from filter.level_12 import level_12
 
 # Modify the filtering of stats and attributes of a rune to your needs.
 # The `rune_filter` has to stay and will be used as the final filter.
@@ -43,6 +45,50 @@ from dsl.dsl import (AND,
 #
 # This way any rune with Level 3 to 11 is checked against the `rune_level_3` filter.
 # This avoids selling potentially good runes, for which you did not define a filter.
+rarity = OR(Legend, Hero)
 
-rune_filter = SPD >= 0
+no_flat_stat_main = OR(
+    AND(
+        Slot.In([2, 4, 6]),
+        NOT(OR(Main.ATK, Main.DEF, Main.HP))
+    ),
+    Slot.In([1, 3, 5])
+)
 
+stat_thresholds = OR(
+    ATK_P >= 7,
+    DEF_P >= 7,
+    HP_P >= 7,
+    ACC >= 7,
+    RES >= 7,
+    SPD >= 5,
+    CRate >= 5,
+    CDmg >= 5
+)
+no_more_than_1_flat_stat = NOT(AtLeast(
+    2,
+    ATK >= 0,
+    DEF >= 0,
+    HP >= 0
+))
+level_0_subs = AND(
+    stat_thresholds,
+    no_more_than_1_flat_stat
+)
+level_0 = AND(
+    Level.InRange(0, 8),
+    level_0_subs
+)
+
+rune_filter = OR(
+    Set == "Fight",
+    AND(
+        rarity,
+        no_flat_stat_main,
+        OR(
+            level_0,
+            level_9,
+            level_12
+        )
+    )
+)
