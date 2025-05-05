@@ -57,6 +57,7 @@ class Scanner:
         img = pyscreenshot.grab()
         img = np.array(img)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        _, img = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY_INV)
         img_name = self._sub_image(img, self._bbox_name)
         img_quality = self._sub_image(img, self._bbox_quality)
         img_main = self._sub_image(img, self._bbox_main)
