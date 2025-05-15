@@ -160,7 +160,10 @@ class Scanner:
             except AttributeError:
                 # Ignore as there is most likely no rune shown
                 return None
+            except TypeError:
+                # Ignore as there is most likely no rune shown
+                return None
             except Exception as e:
                 print(str(e))
-                raise RuneNotReadableException(e, screen)
+                raise RuneNotReadableException(str(e), screen)
         raise RuneNotReadableException("Could not read the Rune", screen)
