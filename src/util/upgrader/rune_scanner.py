@@ -130,17 +130,18 @@ class Scanner:
         img = np.array(screen)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         preprocessing_steps = [
-            lambda image: cv2.threshold(image, 115, 255, cv2.THRESH_BINARY_INV)[1]
+            lambda image: cv2.threshold(image, 115, 255, cv2.THRESH_BINARY_INV)[1],
+            lambda image: cv2.threshold(image, 100, 255, cv2.THRESH_BINARY_INV)[1]
         ]
         for preprocessing_step in preprocessing_steps:
-            img = preprocessing_step(img)
+            preprocessed = preprocessing_step(img)
 
-            img_name = _sub_image(img, self._bbox_name)
-            img_quality = _sub_image(img, self._bbox_quality)
-            img_main = _sub_image(img, self._bbox_main)
-            img_innate = _sub_image(img, self._bbox_innate)
-            img_subs = _sub_image(img, self._bbox_substats)
-            # cv2.imshow("Preprocessed", img)
+            img_name = _sub_image(preprocessed, self._bbox_name)
+            img_quality = _sub_image(preprocessed, self._bbox_quality)
+            img_main = _sub_image(preprocessed, self._bbox_main)
+            img_innate = _sub_image(preprocessed, self._bbox_innate)
+            img_subs = _sub_image(preprocessed, self._bbox_substats)
+            # cv2.imshow("Preprocessed", preprocessed)
             # cv2.imshow("Name", img_name)
             # cv2.imshow("Quality", img_quality)
             # cv2.imshow("Main", img_main)
