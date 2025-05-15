@@ -140,6 +140,14 @@ class Scanner:
             img_main = _sub_image(img, self._bbox_main)
             img_innate = _sub_image(img, self._bbox_innate)
             img_subs = _sub_image(img, self._bbox_substats)
+            # cv2.imshow("Preprocessed", img)
+            # cv2.imshow("Name", img_name)
+            # cv2.imshow("Quality", img_quality)
+            # cv2.imshow("Main", img_main)
+            # cv2.imshow("Innate", img_innate)
+            # cv2.imshow("Subs", img_subs)
+            # cv2.waitKey(0)
+            # cv2.destroyAllWindows()
 
             name_str = pytesseract.image_to_string(img_name, config=r"--oem 3 --psm 7").strip()
             quality_str = pytesseract.image_to_string(img_quality, config=r"--oem 3 --psm 7").strip()
@@ -153,6 +161,6 @@ class Scanner:
                 # Ignore as there is most likely no rune shown
                 return None
             except Exception as e:
-                print(e)
+                print(str(e))
                 raise RuneNotReadableException(e, screen)
         raise RuneNotReadableException("Could not read the Rune", screen)
