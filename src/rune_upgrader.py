@@ -1,9 +1,8 @@
 import json
 
-from src.util.upgrader.rune_scanner import RuneNotReadableException
 from user_filter import rune_filter
 from util.upgrader.navigator import Navigator
-from util.upgrader.rune_scanner import Scanner
+from util.upgrader.rune_scanner import Scanner, RuneNotReadableException
 
 
 def main():
