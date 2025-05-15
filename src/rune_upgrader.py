@@ -28,8 +28,6 @@ def main():
     navigator = Navigator(data, base_delay=0)
 
     kept_runes = []
-    # TODO: configure
-    max_retries = 5
 
     for slot in navigator.slot_iterator():
         iterations = 0
@@ -61,13 +59,6 @@ def main():
             else:
                 navigator.upgrade_rune(9)
                 rune = read_rune(scanner)
-                retries = 0
-                while rune is None:
-                    time.sleep(1)
-                    rune = read_rune(scanner)
-                    retries += 1
-                    if retries >= max_retries:
-                        sys.exit(f"Could not read rune after upgrading in {retries} retries!")
                 print(rune)
                 if not rune_filter(rune):
                     print("Sell - Did not pass filter!")
@@ -78,13 +69,6 @@ def main():
                 else:
                     navigator.upgrade_rune(12)
                     rune = read_rune(scanner)
-                    retries = 0
-                    while rune is None:
-                        time.sleep(1)
-                        rune = read_rune(scanner)
-                        retries += 1
-                        if retries >= max_retries:
-                            sys.exit(f"Could not read rune after upgrading in {retries} retries!")
                     print(rune)
                     if not rune_filter(rune):
                         print("Sell - Did not pass filter")
