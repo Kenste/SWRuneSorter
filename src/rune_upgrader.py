@@ -1,24 +1,8 @@
 import json
-import sys
-import time
-import traceback
 
 from user_filter import rune_filter
 from util.upgrader.navigator import Navigator
-from util.upgrader.rune_scanner import Scanner
-
-
-def read_rune(scanner: Scanner):
-    try:
-        return scanner.scan_rune()
-    except KeyError as k:
-        print(f"Error while reading the Rune. Could not correctly read {k}!")
-    except AttributeError:
-        # Ignore as there is most likely no rune shown
-        pass
-    except Exception:
-        traceback.print_exc()
-    return None
+from util.upgrader.rune_scanner import Scanner, RuneNotReadableException
 
 
 def main():
@@ -28,15 +12,16 @@ def main():
     navigator = Navigator(data, base_delay=0)
 
     kept_runes = []
-    # TODO: configure
-    max_retries = 5
 
     for slot in navigator.slot_iterator():
         iterations = 0
         navigator.reset_rune_i()
         while iterations < len(data["runes_row"]):
             navigator.open_next_rune()
-            rune = read_rune(scanner)
+            try:
+                rune = scanner.scan_rune()
+            except RuneNotReadableException:
+                break
             if rune is None:
                 navigator.increment_rune_i()
                 iterations += 1
@@ -60,14 +45,10 @@ def main():
                     navigator.sell_rune()
             else:
                 navigator.upgrade_rune(9)
-                rune = read_rune(scanner)
-                retries = 0
-                while rune is None:
-                    time.sleep(1)
-                    rune = read_rune(scanner)
-                    retries += 1
-                    if retries >= max_retries:
-                        sys.exit(f"Could not read rune after upgrading in {retries} retries!")
+                try:
+                    rune = scanner.scan_rune()
+                except RuneNotReadableException:
+                    break
                 print(rune)
                 if not rune_filter(rune):
                     print("Sell - Did not pass filter!")
@@ -77,14 +58,10 @@ def main():
                         navigator.sell_rune()
                 else:
                     navigator.upgrade_rune(12)
-                    rune = read_rune(scanner)
-                    retries = 0
-                    while rune is None:
-                        time.sleep(1)
-                        rune = read_rune(scanner)
-                        retries += 1
-                        if retries >= max_retries:
-                            sys.exit(f"Could not read rune after upgrading in {retries} retries!")
+                    try:
+                        rune = scanner.scan_rune()
+                    except RuneNotReadableException:
+                        break
                     print(rune)
                     if not rune_filter(rune):
                         print("Sell - Did not pass filter")
@@ -93,7 +70,7 @@ def main():
                         print("KEEP!")
                         kept_runes.append(rune)
             print("--------------------\n")
-    print("\n"*5)
+    print("\n" * 5)
     print("Kept Runes:")
     for rune in kept_runes:
         print(rune)
